@@ -1,10 +1,17 @@
 import React from 'react'
 
-import { ExampleComponent } from 'smd-timepicker'
+import SMDTimePicker  from 'smd-timepicker'
 import 'smd-timepicker/dist/index.css'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  return(
+    <div>
+      <h1>My react library works good!!</h1>
+      <div>
+        <SMDTimePicker isIncludesSeconds={true} minsPlaceholder='MM' hoursPlaceholder='HH' secondsPlaceholder='SS' value='12:44 AM' is24Hours={true} />
+      </div>
+    </div>
+  )
 }
 
 export default App
