@@ -4,11 +4,15 @@ import SMDTimePicker  from 'smd-timepicker'
 import 'smd-timepicker/dist/index.css'
 
 const App = () => {
+
+  const onSelectingTime = (e:any) => {
+    console.log('app', e)
+  }
   return(
     <div>
       <h1>My react library works good!!</h1>
       <div>
-        <SMDTimePicker isIncludesSeconds={true} minsPlaceholder='MM' hoursPlaceholder='HH' secondsPlaceholder='SS' value='12:44 AM' is24Hours={true} />
+        <SMDTimePicker isIncludesSeconds={false} minsPlaceholder='MM' hoursPlaceholder='HH' secondsPlaceholder='SS' value='11:32 PM' is24Hours={false} onChange={onSelectingTime} format='hh:mm a'/>
       </div>
     </div>
   )

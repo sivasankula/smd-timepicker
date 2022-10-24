@@ -1,10 +1,13 @@
 import * as React from 'react'
+import Input from './Components/Input'
+import SelectAmPm from './Components/SelectAmPm'
+import { defaultOptions } from './Constants/DefaultData.enum'
 import timepickerStyles from './styles.module.css'
 
 interface Props {
   value?: string
   is24Hours?: boolean
-  onChange?: (e: any) => void
+  onChange: (e: any) => void
   defaultType?: string
   hoursPlaceholder?: string
   minsPlaceholder?: string
@@ -14,6 +17,8 @@ interface Props {
   selectStyle?: any
   inputClass?: string
   selectClass?: string
+  selectOptions?: any
+  format?: string
 }
 
 const SMDTimePicker = (props: Props) => {
@@ -22,9 +27,32 @@ const SMDTimePicker = (props: Props) => {
   const secondsRef = React.useRef<any>(null)
   const selectRef = React.useRef<any>(null)
   console.log(props)
+  React.useEffect(() => {
+    console.log(props.value)
+    if (props.value) {
+      const value = props.value || ''
+      if (value.split(' ').length === 2) {
+        const timeValue = value.split(' ')
+        let amPm = timeValue[1]
+        amPm = amPm[0] === 'A' || amPm[0] === 'a' ? 'am' : 'pm'
+        const hoursValue = timeValue[0].split(':')[0]
+        const minutesValue = timeValue[0].split(':')[1]
+        if (selectRef && selectRef.current) {
+          selectRef.current.value = amPm
+        }
+        if (hoursRef && hoursRef.current) {
+          hoursRef.current.value = hoursValue
+        }
+        if (minutesRef && minutesRef.current) {
+          minutesRef.current.value = minutesValue
+        }
+      } else {
+      }
+    }
+  }, [])
   const onKeyDownCheck = (e: any) => {
     e.persist()
-    console.log(e)
+    // console.log(e)
     if (e.key === 'ArrowRight') {
       if (e.target.name === 'hours') {
         minutesRef.current.focus()
@@ -43,10 +71,11 @@ const SMDTimePicker = (props: Props) => {
       } else if (e.target.name === 'seconds') {
         minutesRef.current.focus()
       } else if (e.target.name === 'selectAMPM') {
-        secondsRef.current.focus()
+        if (props.isIncludesSeconds) secondsRef.current.focus()
+        else minutesRef.current.focus()
       }
     } else if (e.key === 'Backspace') {
-      console.log(minutesRef.current.value)
+      // console.log(minutesRef.current.value)
       if (e.target.name === 'seconds') {
         if (secondsRef.current.value === '') {
           minutesRef.current.focus()
@@ -57,75 +86,151 @@ const SMDTimePicker = (props: Props) => {
         }
       } else if (e.target.name === 'selectAMPM') {
         if (selectRef.current.value === '') {
-          secondsRef.current.focus()
+          if (props.isIncludesSeconds) secondsRef.current.focus()
+          else minutesRef.current.focus()
         }
       }
     }
   }
-  const onkeyPressonlyNumbersAccept = (event: any) => {
-    event.persist()
-    console.log(event)
-    if (!(event.charCode >= 48 && event.charCode <= 57)) {
-      event.preventDefault()
-    }
-  }
+
+  // const getAllEnteredValues = () => {
+  //   if(hoursRef.current.value.length == 2){
+
+  //   }
+  // }
   const onChangeHRHandler = (event: any) => {
     event.persist()
-    console.log('ref', hoursRef)
+    // console.log('ref', hoursRef)
     console.log(event)
-    if (event.target.value.length < 3) {
-      if (event.target.name === 'hours') {
-        if (event.target.value !== '1' && event.target.value !== '0') {
-          if (event.target.value !== '') {
-            if (event.target.value.length === 1) {
-              hoursRef.current.value = `0${event.target.value}`
+    if (event.target.name !== 'selectAMPM') {
+      if (event.target.value.length < 3) {
+        if (event.target.name === 'hours') {
+          if (props.is24Hours) {
+            if (
+              event.target.value !== '0' &&
+              event.target.value !== '1' &&
+              event.target.value !== '2'
+            ) {
+              if (event.target.value !== '') {
+                if (event.target.value.length === 1) {
+                  hoursRef.current.value = `0${event.target.value}`
+                }
+                if (event.target.value[0] === '2') {
+                  let isGreater = false
+                  if (
+                    event.target.value === '20' ||
+                    event.target.value === '21' ||
+                    event.target.value === '22' ||
+                    event.target.value === '23'
+                  ) {
+                    isGreater = false
+                  } else {
+                    isGreater = true
+                    hoursRef.current.value = hoursRef.current.value[0]
+                  }
+                  if (!isGreater) {
+                    minutesRef.current.focus()
+                  }
+                } else {
+                  minutesRef.current.focus()
+                }
+              }
             }
-            minutesRef.current.focus()
+          } else {
+            if (event.target.value !== '1' && event.target.value !== '0') {
+              if (event.target.value !== '') {
+                if (event.target.value.length === 1) {
+                  hoursRef.current.value = `0${event.target.value}`
+                }
+                if (
+                  event.target.value.length === 2 &&
+                  event.target.value[0] === '1'
+                ) {
+                  if (
+                    !(
+                      event.target.value === '10' ||
+                      event.target.value === '11' ||
+                      event.target.value === '12'
+                    )
+                  ) {
+                    hoursRef.current.value = event.target.value[0]
+                  } else {
+                    minutesRef.current.focus()
+                  }
+                } else if (event.target.value === '00') {
+                  hoursRef.current.value = '0'
+                } else {
+                  minutesRef.current.focus()
+                }
+              }
+            }
           }
-        }
-      } else if (
-        event.target.name === 'minutes' ||
-        event.target.name === 'seconds'
-      ) {
-        if (event.target.value.length === 1) {
-          if (
-            event.target.value === '6' ||
-            event.target.value === '7' ||
-            event.target.value === '8' ||
-            event.target.value === '9'
-          ) {
+        } else if (
+          event.target.name === 'minutes' ||
+          event.target.name === 'seconds'
+        ) {
+          if (event.target.value.length === 1) {
+            if (
+              event.target.value === '6' ||
+              event.target.value === '7' ||
+              event.target.value === '8' ||
+              event.target.value === '9'
+            ) {
+              if (event.target.name === 'minutes') {
+                minutesRef.current.value = `0${event.target.value}`
+                if (props.isIncludesSeconds) secondsRef.current.focus()
+                else if (!props.is24Hours) selectRef.current.focus()
+              } else {
+                secondsRef.current.value = `0${event.target.value}`
+                if (!props.is24Hours) selectRef.current.focus()
+              }
+            }
+          } else {
             if (event.target.name === 'minutes') {
-              minutesRef.current.value = `0${event.target.value}`
-              secondsRef.current.focus()
+              if (props.isIncludesSeconds) secondsRef.current.focus()
+              else if (!props.is24Hours) selectRef.current.focus()
             } else {
-              secondsRef.current.value = `0${event.target.value}`
-              selectRef.current.focus()
+              if (!props.is24Hours) selectRef.current.focus()
             }
           }
-        } else {
-          if (event.target.name === 'minutes') secondsRef.current.focus()
-          else selectRef.current.focus()
         }
-        // if (event.target.value[0] !== '6' && event.target.value[0] !== '7' && event.target.value[0] !== '8' && event.target.value[0] !== '9' )
+      } else {
+        if (event.target.name === 'hours') {
+          if (event.target.value[0] !== '0') {
+            hoursRef.current.value = hoursRef.current.value.substring(1)
+          } else {
+            hoursRef.current.value = hoursRef.current.value.substring(0, 2)
+          }
+          minutesRef.current.focus()
+        } else if (event.target.name === 'minutes') {
+          console.log(event.target.value)
+          if (event.target.value[0] !== '0') {
+            minutesRef.current.value = minutesRef.current.value.substring(1)
+          } else {
+            minutesRef.current.value = minutesRef.current.value.substring(0, 2)
+          }
+          if (props.isIncludesSeconds) secondsRef.current.focus()
+          else if (!props.is24Hours) selectRef.current.focus()
+        } else if (event.target.name === 'seconds') {
+          if (event.target.value[0] !== '0') {
+            secondsRef.current.value = secondsRef.current.value.substring(1)
+          } else {
+            secondsRef.current.value = secondsRef.current.value.substring(0, 2)
+          }
+          if (!props.is24Hours) selectRef.current.focus()
+        }
       }
     } else {
-      if (event.target.name === 'hours') {
-        hoursRef.current.value = hoursRef.current.value.substring(0, 2)
-      } else if (event.target.name === 'minutes') {
-        minutesRef.current.value = minutesRef.current.value.substring(0, 2)
-      } else if (event.target.name === 'seconds') {
-        secondsRef.current.value = secondsRef.current.value.substring(0, 2)
-      }
     }
   }
   return (
     <div>
       <div className={timepickerStyles.timepicker__align}>
         <div>
-          <input
+          <Input
             type='text'
             name='hours'
-            ref={hoursRef}
+            refChild={hoursRef}
             placeholder={
               props.hoursPlaceholder === undefined
                 ? 'HH'
@@ -135,14 +240,15 @@ const SMDTimePicker = (props: Props) => {
               props.inputClass || ''
             }`}
             style={{ ...(props.inputStyles || {}) }}
-            onKeyPress={onkeyPressonlyNumbersAccept}
+            // onKeyPress={onkeyPressonlyNumbersAccept}
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
           />
         </div>
         <div>
-          <input
-            ref={minutesRef}
+          <Input
+            type='text'
+            refChild={minutesRef}
             name='minutes'
             placeholder={
               props.minsPlaceholder === undefined ? 'MM' : props.minsPlaceholder
@@ -151,15 +257,16 @@ const SMDTimePicker = (props: Props) => {
               props.inputClass || ''
             }`}
             style={{ ...(props.inputStyles || {}) }}
-            onKeyPress={onkeyPressonlyNumbersAccept}
+            // onKeyPress={onkeyPressonlyNumbersAccept}
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
           />
         </div>
         {props.isIncludesSeconds && (
           <div>
-            <input
-              ref={secondsRef}
+            <Input
+              type='text'
+              refChild={secondsRef}
               name='seconds'
               placeholder={
                 props.secondsPlaceholder === undefined
@@ -170,7 +277,7 @@ const SMDTimePicker = (props: Props) => {
                 props.inputClass || ''
               }`}
               style={{ ...(props.inputStyles || {}) }}
-              onKeyPress={onkeyPressonlyNumbersAccept}
+              // onKeyPress={onkeyPressonlyNumbersAccept}
               onKeyDown={onKeyDownCheck}
               onChange={onChangeHRHandler}
             />
@@ -178,19 +285,20 @@ const SMDTimePicker = (props: Props) => {
         )}
         {!props.is24Hours && (
           <div>
-            <select
-              ref={selectRef}
+            <SelectAmPm
+              refChild={selectRef}
               name='selectAMPM'
+              data={props.selectOptions ? props.selectOptions : defaultOptions}
               style={{ ...(props.selectStyle || {}) }}
               className={`${timepickerStyles.timepicker__select} ${
                 props.inputClass || ''
               }`}
+              onSelect={(e) => {
+                console.log(e, 'and select re', selectRef.current.value)
+              }}
               onKeyDown={onKeyDownCheck}
-            >
-              <option value=''>--</option>
-              <option value='am'>AM</option>
-              <option value='pm'>PM</option>
-            </select>
+              // onChange={onChangeHRHandler}
+            />
           </div>
         )}
       </div>
