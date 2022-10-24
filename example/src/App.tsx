@@ -12,7 +12,7 @@ const App = () => {
     <div>
       <h1>My react library works good!!</h1>
       <div>
-        <SMDTimePicker isIncludesSeconds={false} minsPlaceholder='MM' hoursPlaceholder='HH' secondsPlaceholder='SS' value='11:32 PM' is24Hours={false} onChange={onSelectingTime} format='hh:mm a'/>
+        <SMDTimePicker isIncludesSeconds={false} minsPlaceholder='MM' hoursPlaceholder='HH' secondsPlaceholder='SS' is24Hours={false} onChange={onSelectingTime} format='hh:mm a'/>
       </div>
     </div>
   )

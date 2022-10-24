@@ -24,8 +24,11 @@ const Input = (props: Props) => {
 
   const onBlurInput = (e: any) => {
     e.persist()
-    console.log(e, 'blur', e.target.name)
-    if (props.refChild.current.value.length === 1) {
+    // console.log(e, 'blur', e.target.name)
+    if (
+      props.refChild.current.value.length === 1 ||
+      props.refChild.current.value === ''
+    ) {
       setIsDirtyIn(true)
     } else {
       setIsDirtyIn(false)

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { defaultOptions } from '../Constants/DefaultData.enum'
-// import timepickerStyles from '../styles.module.css'
+import timepickerStyles from '../styles.module.css'
 
 interface Props {
   data: any
@@ -9,22 +9,28 @@ interface Props {
   className: any
   style: any
   onKeyDown: (e: any) => void
-  // onChange: (e: any) => void
-  onSelect: (e: any) => void
+  onSelect: (e?: any) => void
 }
 
 const SelectAmPm = (props: Props) => {
   const data = props.data.length ? props.data : defaultOptions
   const [selectedOption, setSelectedOption] = useState('')
-  const [optionsList, setOptionsList] = useState(data)
+  const [isDirty, setIsDirty] = useState(false)
+  // const [optionsList, setOptionsList] = useState(data)
 
   const onSelectingValue = (e: any) => {
-    if (e.target.value !== '') {
-      console.log(e)
-      setOptionsList(data.filter((fItem: any) => fItem.value !== ''))
-      setSelectedOption(e.target.value)
-      console.log('from selct', props.refChild.current.value)
-      props.onSelect(props.refChild.current.value)
+    // setOptionsList(data.filter((fItem: any) => fItem.value !== ''))
+    setSelectedOption(e.target.value)
+    props.onSelect(e.target.value)
+  }
+
+  const onBlurSelectValue = (e: any) => {
+    e.persist()
+    console.log(e)
+    if (e.target.value === '') {
+      setIsDirty(true)
+    } else {
+      setIsDirty(false)
     }
   }
 
@@ -33,12 +39,13 @@ const SelectAmPm = (props: Props) => {
       ref={props.refChild}
       onChange={onSelectingValue}
       onKeyDown={props.onKeyDown}
-      className={props.className}
+      className={`${props.className} ${isDirty && timepickerStyles.err__input}`}
       style={props.style}
       name={props.name}
       value={selectedOption}
+      onBlur={onBlurSelectValue}
     >
-      {optionsList.map((item: any) => (
+      {data.map((item: any) => (
         <option key={Math.random().toString()} value={item.value}>
           {item.name}
         </option>

@@ -27,6 +27,7 @@
  .err__input{
   border: 4px solid red;
   border-radius: 3px;
+  background-color: rgb(253, 180, 180);
  }
  /* .timepicker__selectContainer{
   margin-left: 5px;
