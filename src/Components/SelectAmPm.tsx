@@ -26,7 +26,6 @@ const SelectAmPm = (props: Props) => {
 
   const onBlurSelectValue = (e: any) => {
     e.persist()
-    console.log(e)
     if (e.target.value === '') {
       setIsDirty(true)
     } else {

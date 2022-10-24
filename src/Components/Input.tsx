@@ -16,7 +16,6 @@ const Input = (props: Props) => {
   const [isDirtyIn, setIsDirtyIn] = useState(false)
   const onkeyPressonlyNumbersAccept = (event: any) => {
     event.persist()
-    // console.log(event)
     if (!(event.charCode >= 48 && event.charCode <= 57)) {
       event.preventDefault()
     }
@@ -24,7 +23,6 @@ const Input = (props: Props) => {
 
   const onBlurInput = (e: any) => {
     e.persist()
-    // console.log(e, 'blur', e.target.name)
     if (
       props.refChild.current.value.length === 1 ||
       props.refChild.current.value === ''

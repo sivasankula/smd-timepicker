@@ -40,7 +40,6 @@ const SMDTimePicker = (props: Props) => {
   const minutesRef = React.useRef<any>(null)
   const secondsRef = React.useRef<any>(null)
   const selectRef = React.useRef<any>(null)
-  console.log(props)
   React.useEffect(() => {
     if (value) {
       const Tvalue = value || ''
@@ -283,7 +282,6 @@ const SMDTimePicker = (props: Props) => {
         if (!is24Hours) selectRef.current.focus()
       }
     }
-    console.log(getAllEnteredValues())
     if (getAllEnteredValues()) {
       props.onChange(getFormateOutput())
     }
@@ -293,7 +291,6 @@ const SMDTimePicker = (props: Props) => {
     if (getAllEnteredValues()) {
       props.onChange(getFormateOutput())
     }
-    console.log(getAllEnteredValues())
   }
 
   return (
