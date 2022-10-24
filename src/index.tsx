@@ -9,7 +9,7 @@ interface Props {
   is24Hours?: boolean
   onChange: (e: any) => void
   hoursPlaceholder?: string
-  minsPlaceholder?: string
+  minutesPlaceholder?: string
   isIncludesSeconds?: boolean
   secondsPlaceholder?: string
   inputStyles?: any
@@ -26,7 +26,7 @@ const SMDTimePicker = (props: Props) => {
     is24Hours = false,
     // onChange = (e: any) => {},
     hoursPlaceholder = 'HH',
-    minsPlaceholder = 'MM',
+    minutesPlaceholder = 'MM',
     secondsPlaceholder = 'SS',
     isIncludesSeconds = false,
     inputStyles,
@@ -318,7 +318,9 @@ const SMDTimePicker = (props: Props) => {
             type='text'
             refChild={minutesRef}
             name='minutes'
-            placeholder={minsPlaceholder === undefined ? 'MM' : minsPlaceholder}
+            placeholder={
+              minutesPlaceholder === undefined ? 'MM' : minutesPlaceholder
+            }
             className={`${timepickerStyles.timepicker__input} ${
               inputClass || ''
             }`}
