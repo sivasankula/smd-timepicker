@@ -7,3 +7,76 @@
   font-size: 2em;
   text-align: center;
 }
+
+.timepicker__align{
+  width: 100%;
+  display: flex;
+}
+/* .timepicker__inputContainer{
+  width:  32px;
+  padding-left: 5px;
+ } */
+ .timepicker__input{
+  width: 30px;
+  text-align: center;
+  margin: 0 1px 0 1px;
+ }
+ .timepicker__input:focus{
+  border: 3px solid rgb(0, 220, 0);
+ }
+ .err__input{
+  border: 4px solid red;
+  border-radius: 3px;
+  background-color: rgb(253, 180, 180);
+ }
+ /* .timepicker__selectContainer{
+  margin-left: 5px;
+  width: 52px;
+ } */
+ .timepicker__select{
+  width: 52px;
+  height: 90%;
+ }
+.timepicker__select:focus{
+  border: 3px solid rgb(0, 220, 0);
+}
+
+
+@media screen and (min-width: 100px) and (max-width:321px ) {
+  .timepicker__input{
+    width: 28px;
+  }
+}
+@media screen and (min-width: 321px) and (max-width:480px ) {
+  .timepicker__input{
+    width: 28px;
+  }
+}
+
+@media screen and (min-width: 480px) and (max-width: 600px ) {
+ 
+  
+}
+
+@media screen and (min-width: 600px) and (max-width: 768px ) {
+ 
+}
+
+@media screen and (min-width: 768px) and (max-width:1024px ) {
+ 
+ 
+  
+}
+
+@media screen and (min-width: 1025px)  and (max-width: 1700px){
+
+}
+
+@media screen and (min-width: 1700px) {
+  .timepicker__inputContainer{
+    width:  80px;
+   }
+   .timepicker__selectContainer{
+     width: 100px;
+   }
+}
