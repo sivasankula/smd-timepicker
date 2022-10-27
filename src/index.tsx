@@ -2,7 +2,6 @@ import * as React from 'react'
 import Input from './Components/Input'
 import SelectAmPm from './Components/SelectAmPm'
 import { defaultOptions } from './Constants/DefaultData.enum'
-import './Components/Index.css'
 // import timepickerStyles from './styles.module.css'
 
 interface Props {
@@ -31,7 +30,7 @@ const SMDTimePicker = (props: Props) => {
     secondsPlaceholder = 'SS',
     isIncludesSeconds = false,
     inputStyles,
-    // selectClass,
+    selectClass,
     selectStyle,
     inputClass,
     selectOptions
@@ -319,7 +318,6 @@ const SMDTimePicker = (props: Props) => {
               textAlign: 'center',
               margin: '0 1px 0 1px'
             }}
-            // onKeyPress={onkeyPressonlyNumbersAccept}
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
           />
@@ -341,7 +339,6 @@ const SMDTimePicker = (props: Props) => {
               textAlign: 'center',
               margin: '0 1px 0 1px'
             }}
-            // onKeyPress={onkeyPressonlyNumbersAccept}
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
           />
@@ -364,7 +361,6 @@ const SMDTimePicker = (props: Props) => {
                 textAlign: 'center',
                 margin: '0 1px 0 1px'
               }}
-              // onKeyPress={onkeyPressonlyNumbersAccept}
               onKeyDown={onKeyDownCheck}
               onChange={onChangeHRHandler}
             />
@@ -378,36 +374,13 @@ const SMDTimePicker = (props: Props) => {
               name='selectAMPM'
               data={selectOptions || defaultOptions}
               style={{ ...(selectStyle || {}), width: '52px', height: '20px' }}
-              className={`${inputClass || ''}`}
+              className={`${selectClass || ''}`}
               onSelect={onSelectValue}
               onKeyDown={onKeyDownCheck}
-              // onChange={onChangeHRHandler}
             />
           </div>
         )}
       </div>
-      {/* <div style={{ width: '100%', display: 'flex' }}>
-        <div
-          style={{
-            width: '30px',
-            height: '50px',
-            border: '1px solid red',
-            marginLeft: '5px'
-          }}
-        >
-          1
-        </div>
-        <div
-          style={{
-            width: '30px',
-            height: '50px',
-            border: '1px solid red',
-            marginLeft: '5px'
-          }}
-        >
-          2
-        </div>
-      </div> */}
     </div>
   )
 }

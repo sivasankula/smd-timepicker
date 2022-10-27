@@ -4,8 +4,7 @@ import {
   hoursOptions24,
   minsOrSeconds
 } from '../Constants/DefaultData.enum'
-import './Index.css'
-// import timepickerStyles from '../styles.module.css'
+import timepickerStyles from '../styles.module.css'
 
 interface Props {
   onChange: (e: any) => void
@@ -36,7 +35,6 @@ const Input = (props: Props) => {
         : minsOrSeconds
     setRenderData(rendData)
     setFetchRenderData(rendData)
-    // console.log(renderData, rendData)
   }, [])
 
   const onkeyPressonlyNumbersAccept = (event: any) => {
@@ -69,7 +67,6 @@ const Input = (props: Props) => {
     e.persist()
     setRenderData([...fetchRenderData])
     setOpenPicker(true)
-    // console.log(e)
   }
 
   const onChangeHandler = (e: any) => {
@@ -94,13 +91,10 @@ const Input = (props: Props) => {
         name={props.name}
         ref={props.refChild}
         placeholder={props.placeholder}
-        className={`${props.className}`}
-        style={{
-          ...props.style,
-          border: isDirtyIn ? '4px solid red' : '',
-          borderRadius: isDirtyIn ? '3px' : '',
-          backgroundColor: isDirtyIn ? 'rgb(253, 180, 180)' : ''
-        }}
+        className={`${props.className} ${
+          isDirtyIn && timepickerStyles.err__input
+        }`}
+        style={{ ...props.style }}
         onChange={onChangeHandler}
         onKeyPress={onkeyPressonlyNumbersAccept}
         onKeyDown={props.onKeyDown}
@@ -108,58 +102,41 @@ const Input = (props: Props) => {
         onFocus={onFocusHandler}
       />
       {openPicker && (
-        <div
-          style={{
-            width: '30px',
-            border: '2px solid black',
-            height: '100px',
-            marginLeft: '3px',
-            overflow: 'auto'
-          }}
-        >
-          <div style={{ height: '100%' }}>
+        <div className={timepickerStyles.custom__select__input}>
+          <div>
             {renderData.map((item: any) => (
               <div
                 id={`${item.value}`}
-                onMouseOut={() => {
-                  setIsInside(false)
-                  // e.persist()
-                  // console.log(e, 'mouse out')
-                  const docData = document.getElementById(item.value)
-                  if (docData) {
-                    if (docData.style.backgroundColor !== 'green') {
-                      docData.style.backgroundColor = 'white'
-                    }
-                  }
-                  // setOpenPicker(false)
-                }}
-                onMouseOver={() => {
-                  setIsInside(true)
-                  // e.persist()
-                  // console.log(e, 'mouse mooved')
-                  const docData = document.getElementById(item.value)
-                  if (docData) {
-                    if (docData.style.backgroundColor !== 'green') {
-                      docData.style.backgroundColor = 'lightgreen'
-                    }
-                  }
-                  // setOpenPicker(true)
-                }}
+                className={`${timepickerStyles.timeValue__container}`}
                 style={{
-                  border: '1px solid green',
-                  margin: '1px 0',
-                  cursor: 'pointer',
-                  textAlign: 'center',
                   backgroundColor:
                     props.refChild.current.value === item.value
-                      ? 'green'
+                      ? '#3f3fff'
                       : 'white'
                 }}
                 key={item.value}
+                onMouseOut={() => {
+                  setIsInside(false)
+                  const docData = document.getElementById(item.value)
+                  if (docData) {
+                    if (docData.style.backgroundColor !== 'rgb(63, 63, 255)') {
+                      docData.style.backgroundColor = 'white'
+                    }
+                  }
+                }}
+                onMouseOver={() => {
+                  setIsInside(true)
+                  const docData = document.getElementById(item.value)
+                  if (docData) {
+                    if (docData.style.backgroundColor !== 'rgb(63, 63, 255)') {
+                      docData.style.backgroundColor = 'lightblue'
+                    }
+                  }
+                }}
                 onClick={() => {
                   props.refChild.current.value = item.value
-                  console.log('clicking p', item.value)
                   setOpenPicker(false)
+                  setIsDirtyIn(false)
                 }}
               >
                 {item.name}
