@@ -293,13 +293,17 @@ const SMDTimePicker = (props: Props) => {
       props.onChange(getFormateOutput())
     }
   }
+  const ongetManuallySelectedValue = () => {
+    if (getAllEnteredValues()) {
+      props.onChange(getFormateOutput())
+    }
+  }
 
   return (
     <div>
       <div>
         <h1 className='siva'>hii siva lib works</h1>
       </div>
-      <style>.siva</style>
       <div style={{ width: '100%', display: 'flex' }}>
         <div>
           <Input
@@ -320,6 +324,7 @@ const SMDTimePicker = (props: Props) => {
             }}
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
+            onManuallySelect={ongetManuallySelectedValue}
           />
         </div>
         <div>
@@ -341,6 +346,7 @@ const SMDTimePicker = (props: Props) => {
             }}
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
+            onManuallySelect={ongetManuallySelectedValue}
           />
         </div>
         {isIncludesSeconds && (
@@ -363,6 +369,7 @@ const SMDTimePicker = (props: Props) => {
               }}
               onKeyDown={onKeyDownCheck}
               onChange={onChangeHRHandler}
+              onManuallySelect={ongetManuallySelectedValue}
             />
           </div>
         )}

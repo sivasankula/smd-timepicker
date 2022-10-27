@@ -5,10 +5,12 @@ import {
   minsOrSeconds
 } from '../Constants/DefaultData.enum'
 import timepickerStyles from '../styles.module.css'
+import SelectValues from './SelectValues'
 
 interface Props {
   onChange: (e: any) => void
   onKeyDown: (e: any) => void
+  onManuallySelect: () => void
   type: string
   refChild: any
   placeholder: string
@@ -61,6 +63,9 @@ const Input = (props: Props) => {
         setIsDirtyIn(false)
       }
     }
+    if (props.refChild.current.value.length === 2) {
+      setOpenPicker(false)
+    }
   }
 
   const onFocusHandler = (e: any) => {
@@ -80,6 +85,36 @@ const Input = (props: Props) => {
             Fitem.value[1] === e.target.value
         )
       )
+    }
+    if (e.target.value.length === 2) {
+      setOpenPicker(false)
+    }
+  }
+
+  const onSelectValueClickHandler = (value: string) => {
+    props.refChild.current.value = value
+    setOpenPicker(false)
+    setIsDirtyIn(false)
+    props.onManuallySelect()
+  }
+
+  const onSelectValueMouseOutHandler = (value: string) => {
+    setIsInside(false)
+    const docData = document.getElementById(value)
+    if (docData) {
+      if (docData.style.backgroundColor !== 'rgb(63, 63, 255)') {
+        docData.style.backgroundColor = 'white'
+      }
+    }
+  }
+
+  const onSelectValueMouseOverHandler = (value: string) => {
+    setIsInside(true)
+    const docData = document.getElementById(value)
+    if (docData) {
+      if (docData.style.backgroundColor !== 'rgb(63, 63, 255)') {
+        docData.style.backgroundColor = 'lightblue'
+      }
     }
   }
 
@@ -102,48 +137,13 @@ const Input = (props: Props) => {
         onFocus={onFocusHandler}
       />
       {openPicker && (
-        <div className={timepickerStyles.custom__select__input}>
-          <div>
-            {renderData.map((item: any) => (
-              <div
-                id={`${item.value}`}
-                className={`${timepickerStyles.timeValue__container}`}
-                style={{
-                  backgroundColor:
-                    props.refChild.current.value === item.value
-                      ? '#3f3fff'
-                      : 'white'
-                }}
-                key={item.value}
-                onMouseOut={() => {
-                  setIsInside(false)
-                  const docData = document.getElementById(item.value)
-                  if (docData) {
-                    if (docData.style.backgroundColor !== 'rgb(63, 63, 255)') {
-                      docData.style.backgroundColor = 'white'
-                    }
-                  }
-                }}
-                onMouseOver={() => {
-                  setIsInside(true)
-                  const docData = document.getElementById(item.value)
-                  if (docData) {
-                    if (docData.style.backgroundColor !== 'rgb(63, 63, 255)') {
-                      docData.style.backgroundColor = 'lightblue'
-                    }
-                  }
-                }}
-                onClick={() => {
-                  props.refChild.current.value = item.value
-                  setOpenPicker(false)
-                  setIsDirtyIn(false)
-                }}
-              >
-                {item.name}
-              </div>
-            ))}
-          </div>
-        </div>
+        <SelectValues
+          renderData={renderData}
+          refChild={props.refChild}
+          onClick={onSelectValueClickHandler}
+          onMouseOut={onSelectValueMouseOutHandler}
+          onMouseOver={onSelectValueMouseOverHandler}
+        />
       )}
     </div>
   )
