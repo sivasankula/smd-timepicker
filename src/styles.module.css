@@ -35,7 +35,7 @@
  } */
  .timepicker__select{
   width: 52px;
-  height: 90%;
+  height: 20px;
  }
 .timepicker__select:focus{
   border: 3px solid rgb(0, 220, 0);

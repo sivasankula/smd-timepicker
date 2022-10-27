@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { defaultOptions } from '../Constants/DefaultData.enum'
-import timepickerStyles from '../styles.module.css'
+// import timepickerStyles from '../styles.module.css'
 
 interface Props {
+  id: string
   data: any
   refChild: any
   name: string
@@ -35,14 +36,25 @@ const SelectAmPm = (props: Props) => {
 
   return (
     <select
+      id={props.id}
       ref={props.refChild}
       onChange={onSelectingValue}
       onKeyDown={props.onKeyDown}
-      className={`${props.className} ${isDirty && timepickerStyles.err__input}`}
-      style={props.style}
+      className={`${props.className}`}
+      style={{
+        ...props.style,
+        width: '52px',
+        height: '25px',
+        border: isDirty ? '4px solid red' : '',
+        borderRadius: isDirty ? '3px' : '',
+        backgroundColor: isDirty ? 'rgb(253, 180, 180)' : ''
+      }}
       name={props.name}
       value={selectedOption}
       onBlur={onBlurSelectValue}
+      onFocus={(e) => {
+        console.log(e, 'ffffselect')
+      }}
     >
       {data.map((item: any) => (
         <option key={Math.random().toString()} value={item.value}>

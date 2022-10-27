@@ -30,10 +30,13 @@ class Example extends Component {
 ```
 ## props
 ```
+_________________________________________________________________________
 |     Prop         |  Default Value(type)  |   Description               |
-|------------------|-----------------------|-----------------------------|
+|________________________________________________________________________|
+|                  |                       |                             |
 |   onChange       |  onChange: (e: any)   | Captures the output in the  |
 |                  |     => void           | format of hh:mm a           |
+|                  |                       |                             |
 |------------------|-----------------------|-----------------------------|
 |    format        |   hh:mm a             | can able to pass the format |
 |                  |                       | like hh:mm a or HH:mm       |
@@ -55,7 +58,7 @@ class Example extends Component {
 |------------------|-----------------------|-----------------------------|
 |   inputStyles    |  {...} (styles object)| use inline styles for input |
 |------------------|-----------------------|-----------------------------|
-|   inputClass     |  "" (className)        | can able to provide css     |
+|   inputClass     |  "" (className)       | can able to provide css     |
 |------------------|-----------------------|-----------------------------|
 |   selectStyle    |  {...} (styles object)| use inline styles for select|
 |------------------|-----------------------|-----------------------------|

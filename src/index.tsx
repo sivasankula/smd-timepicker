@@ -2,7 +2,8 @@ import * as React from 'react'
 import Input from './Components/Input'
 import SelectAmPm from './Components/SelectAmPm'
 import { defaultOptions } from './Constants/DefaultData.enum'
-import timepickerStyles from './styles.module.css'
+import './Components/Index.css'
+// import timepickerStyles from './styles.module.css'
 
 interface Props {
   value?: string
@@ -40,6 +41,7 @@ const SMDTimePicker = (props: Props) => {
   const minutesRef = React.useRef<any>(null)
   const secondsRef = React.useRef<any>(null)
   const selectRef = React.useRef<any>(null)
+  // const minSelectRef = React.useRef<any>(null)
   React.useEffect(() => {
     if (value) {
       const Tvalue = value || ''
@@ -295,19 +297,28 @@ const SMDTimePicker = (props: Props) => {
 
   return (
     <div>
-      <div className={timepickerStyles.timepicker__align}>
+      <div>
+        <h1 className='siva'>hii siva lib works</h1>
+      </div>
+      <style>.siva</style>
+      <div style={{ width: '100%', display: 'flex' }}>
         <div>
           <Input
             type='text'
             name='hours'
+            id='hours'
+            is24={props.is24Hours || false}
             refChild={hoursRef}
             placeholder={
               hoursPlaceholder === undefined ? 'HH' : hoursPlaceholder
             }
-            className={`${timepickerStyles.timepicker__input} ${
-              inputClass || ''
-            }`}
-            style={{ ...(inputStyles || {}) }}
+            className={`${inputClass || ''}`}
+            style={{
+              ...(inputStyles || {}),
+              width: '30px',
+              textAlign: 'center',
+              margin: '0 1px 0 1px'
+            }}
             // onKeyPress={onkeyPressonlyNumbersAccept}
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
@@ -316,15 +327,20 @@ const SMDTimePicker = (props: Props) => {
         <div>
           <Input
             type='text'
+            id='minutes'
+            is24={props.is24Hours || false}
             refChild={minutesRef}
             name='minutes'
             placeholder={
               minutesPlaceholder === undefined ? 'MM' : minutesPlaceholder
             }
-            className={`${timepickerStyles.timepicker__input} ${
-              inputClass || ''
-            }`}
-            style={{ ...(inputStyles || {}) }}
+            className={`${inputClass || ''}`}
+            style={{
+              ...(inputStyles || {}),
+              width: '30px',
+              textAlign: 'center',
+              margin: '0 1px 0 1px'
+            }}
             // onKeyPress={onkeyPressonlyNumbersAccept}
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
@@ -334,15 +350,20 @@ const SMDTimePicker = (props: Props) => {
           <div>
             <Input
               type='text'
+              id='seconds'
               refChild={secondsRef}
               name='seconds'
+              is24={props.is24Hours || false}
               placeholder={
                 secondsPlaceholder === undefined ? 'SS' : secondsPlaceholder
               }
-              className={`${timepickerStyles.timepicker__input} ${
-                inputClass || ''
-              }`}
-              style={{ ...(inputStyles || {}) }}
+              className={`${inputClass || ''}`}
+              style={{
+                ...(inputStyles || {}),
+                width: '30px',
+                textAlign: 'center',
+                margin: '0 1px 0 1px'
+              }}
               // onKeyPress={onkeyPressonlyNumbersAccept}
               onKeyDown={onKeyDownCheck}
               onChange={onChangeHRHandler}
@@ -352,13 +373,12 @@ const SMDTimePicker = (props: Props) => {
         {!is24Hours && (
           <div>
             <SelectAmPm
+              id='selectAMPM'
               refChild={selectRef}
               name='selectAMPM'
               data={selectOptions || defaultOptions}
-              style={{ ...(selectStyle || {}) }}
-              className={`${timepickerStyles.timepicker__select} ${
-                inputClass || ''
-              }`}
+              style={{ ...(selectStyle || {}), width: '52px', height: '20px' }}
+              className={`${inputClass || ''}`}
               onSelect={onSelectValue}
               onKeyDown={onKeyDownCheck}
               // onChange={onChangeHRHandler}
@@ -366,6 +386,28 @@ const SMDTimePicker = (props: Props) => {
           </div>
         )}
       </div>
+      {/* <div style={{ width: '100%', display: 'flex' }}>
+        <div
+          style={{
+            width: '30px',
+            height: '50px',
+            border: '1px solid red',
+            marginLeft: '5px'
+          }}
+        >
+          1
+        </div>
+        <div
+          style={{
+            width: '30px',
+            height: '50px',
+            border: '1px solid red',
+            marginLeft: '5px'
+          }}
+        >
+          2
+        </div>
+      </div> */}
     </div>
   )
 }
