@@ -19,6 +19,7 @@ interface Props {
   name: string
   id: string
   is24: boolean
+  isRemoveInputSelector: boolean
 }
 
 const Input = (props: Props) => {
@@ -64,7 +65,9 @@ const Input = (props: Props) => {
       }
     }
     if (props.refChild.current.value.length === 2) {
-      setOpenPicker(false)
+      if (!isInside) {
+        setOpenPicker(false)
+      }
     }
   }
 
@@ -136,14 +139,18 @@ const Input = (props: Props) => {
         onBlur={onBlurInput}
         onFocus={onFocusHandler}
       />
-      {openPicker && (
-        <SelectValues
-          renderData={renderData}
-          refChild={props.refChild}
-          onClick={onSelectValueClickHandler}
-          onMouseOut={onSelectValueMouseOutHandler}
-          onMouseOver={onSelectValueMouseOverHandler}
-        />
+      {!props.isRemoveInputSelector && (
+        <div>
+          {openPicker && (
+            <SelectValues
+              renderData={renderData}
+              refChild={props.refChild}
+              onClick={onSelectValueClickHandler}
+              onMouseOut={onSelectValueMouseOutHandler}
+              onMouseOver={onSelectValueMouseOverHandler}
+            />
+          )}
+        </div>
       )}
     </div>
   )

@@ -12,7 +12,7 @@ const App = () => {
     <div>
       <h1 className='success' >My react library works good!!</h1>
       <div>
-        <SMDTimePicker onChange={onSelectingTime}/>
+        <SMDTimePicker value='' onChange={onSelectingTime} />
       </div>
     </div>
   )

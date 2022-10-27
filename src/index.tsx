@@ -7,6 +7,7 @@ import { defaultOptions } from './Constants/DefaultData.enum'
 interface Props {
   value?: string
   is24Hours?: boolean
+  removeInputSelector?: boolean
   onChange: (e: any) => void
   hoursPlaceholder?: string
   minutesPlaceholder?: string
@@ -325,6 +326,7 @@ const SMDTimePicker = (props: Props) => {
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
             onManuallySelect={ongetManuallySelectedValue}
+            isRemoveInputSelector={props.removeInputSelector || false}
           />
         </div>
         <div>
@@ -347,6 +349,7 @@ const SMDTimePicker = (props: Props) => {
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
             onManuallySelect={ongetManuallySelectedValue}
+            isRemoveInputSelector={props.removeInputSelector || false}
           />
         </div>
         {isIncludesSeconds && (
@@ -370,6 +373,7 @@ const SMDTimePicker = (props: Props) => {
               onKeyDown={onKeyDownCheck}
               onChange={onChangeHRHandler}
               onManuallySelect={ongetManuallySelectedValue}
+              isRemoveInputSelector={props.removeInputSelector || false}
             />
           </div>
         )}
