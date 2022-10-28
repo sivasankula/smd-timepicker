@@ -3,7 +3,7 @@ import timepickerStyles from '../styles.module.css'
 
 interface Props {
   renderData: any
-  refChild: any
+  refValue: any
   onClick: (value: string) => void
   onMouseOut: (value: string) => void
   onMouseOver: (value: string) => void
@@ -12,16 +12,14 @@ interface Props {
 function SelectValues(props: Props) {
   return (
     <div className={timepickerStyles.custom__select__input}>
-      <div>
+      <div id='60' onClick={(e) => console.log('eee', e)}>
         {props.renderData.map((item: any) => (
           <div
             id={`${item.value}`}
             className={`${timepickerStyles.timeValue__container}`}
             style={{
               backgroundColor:
-                props.refChild.current.value === item.value
-                  ? '#3f3fff'
-                  : 'white'
+                props.refValue === item.value ? '#3f3fff' : 'white'
             }}
             key={item.value}
             onMouseOut={() => {

@@ -4,6 +4,115 @@ export const defaultOptions = [
   { name: 'PM', value: 'pm' }
 ]
 
+export const allowedFormats = [
+  { format: 'h:m:s', inTime: '12hrs', seconds: 's', minutes: 'm', hours: 'h' },
+  {
+    format: 'h:m:ss',
+    inTime: '12hrs',
+    seconds: 'ss',
+    minutes: 'm',
+    hours: 'h'
+  },
+  {
+    format: 'h:mm:s',
+    inTime: '12hrs',
+    seconds: 's',
+    minutes: 'mm',
+    hours: 'h'
+  },
+  {
+    format: 'h:mm:ss',
+    inTime: '12hrs',
+    seconds: 'ss',
+    minutes: 'mm',
+    hours: 'h'
+  },
+  {
+    format: 'hh:m:s',
+    inTime: '12hrs',
+    seconds: 's',
+    minutes: 'm',
+    hours: 'hh'
+  },
+  {
+    format: 'hh:m:ss',
+    inTime: '12hrs',
+    seconds: 'ss',
+    minutes: 'm',
+    hours: 'hh'
+  },
+  {
+    format: 'hh:mm:s',
+    inTime: '12hrs',
+    seconds: 's',
+    minutes: 'mm',
+    hours: 'hh'
+  },
+  {
+    format: 'hh:mm:ss',
+    inTime: '12hrs',
+    seconds: 'ss',
+    minutes: 'mm',
+    hours: 'hh'
+  }
+]
+
+export const allowed24Formats = [
+  { format: 'H:m:s', inTime: '24hrs', seconds: 's', minutes: 'm', hours: 'H' },
+  {
+    format: 'H:m:ss',
+    inTime: '24hrs',
+    seconds: 'ss',
+    minutes: 'm',
+    hours: 'H'
+  },
+  {
+    format: 'H:mm:s',
+    inTime: '24hrs',
+    seconds: 's',
+    minutes: 'mm',
+    hours: 'H'
+  },
+  {
+    format: 'H:mm:ss',
+    inTime: '24hrs',
+    seconds: 'ss',
+    minutes: 'mm',
+    hours: 'H'
+  },
+  {
+    format: 'HH:m:s',
+    inTime: '24hrs',
+    seconds: 's',
+    minutes: 'm',
+    hours: 'HH'
+  },
+  {
+    format: 'HH:m:ss',
+    inTime: '24hrs',
+    seconds: 'ss',
+    minutes: 'm',
+    hours: 'HH'
+  },
+  {
+    format: 'HH:mm:s',
+    inTime: '24hrs',
+    seconds: 's',
+    minutes: 'mm',
+    hours: 'HH'
+  },
+  {
+    format: 'HH:mm:ss',
+    inTime: '24hrs',
+    seconds: 'ss',
+    minutes: 'mm',
+    hours: 'HH'
+  }
+]
+
+export const defaultFormat = allowedFormats[7]
+export const default24Format = allowed24Formats[7]
+
 export const hoursOptions24 = [
   { name: '00', value: '00' },
   { name: '01', value: '01' },

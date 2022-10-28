@@ -8,7 +8,7 @@ import timepickerStyles from '../styles.module.css'
 import SelectValues from './SelectValues'
 
 interface Props {
-  onChange: (e: any) => void
+  onChange: (e: any, isValid: boolean) => void
   onKeyDown: (e: any) => void
   onManuallySelect: () => void
   type: string
@@ -69,6 +69,7 @@ const Input = (props: Props) => {
         setOpenPicker(false)
       }
     }
+    setIsInside(false)
   }
 
   const onFocusHandler = (e: any) => {
@@ -79,7 +80,6 @@ const Input = (props: Props) => {
 
   const onChangeHandler = (e: any) => {
     e.persist()
-    props.onChange(e)
     if (e.target.value.length === 1) {
       setRenderData(
         fetchRenderData.filter(
@@ -92,6 +92,14 @@ const Input = (props: Props) => {
     if (e.target.value.length === 2) {
       setOpenPicker(false)
     }
+    let isValidPastd = false
+    try {
+      JSON.parse(e.target.value)
+      isValidPastd = true
+    } catch (error) {
+      isValidPastd = false
+    }
+    props.onChange(e, isValidPastd)
   }
 
   const onSelectValueClickHandler = (value: string) => {
@@ -121,6 +129,34 @@ const Input = (props: Props) => {
     }
   }
 
+  const onKeyDownValidate = (e: any) => {
+    e.persist()
+    if (e.key === 'ArrowRight') {
+      if (e.target.name === 'hours') {
+        setOpenPicker(false)
+      } else if (e.target.name === 'minutes') {
+        setOpenPicker(false)
+      } else if (e.target.name === 'seconds') {
+        if (!props.is24) {
+          setOpenPicker(false)
+        }
+      }
+    } else if (e.key === 'ArrowLeft') {
+      if (e.target.name === 'minutes') {
+        setOpenPicker(false)
+      } else if (e.target.name === 'seconds') {
+        setOpenPicker(false)
+      } else if (e.target.name === 'selectAMPM') {
+      }
+    } else if (e.key === 'Backspace') {
+      // const dataEle = document.getElementById(`59`)
+      // if (dataEle) {
+      //   dataEle.click()
+      // }
+    }
+    props.onKeyDown(e)
+  }
+
   return (
     <div>
       <input
@@ -135,16 +171,20 @@ const Input = (props: Props) => {
         style={{ ...props.style }}
         onChange={onChangeHandler}
         onKeyPress={onkeyPressonlyNumbersAccept}
-        onKeyDown={props.onKeyDown}
+        onKeyDown={onKeyDownValidate}
         onBlur={onBlurInput}
         onFocus={onFocusHandler}
+        onPaste={(e: any) => {
+          e.persist()
+          props.refChild.current.value = ''
+        }}
       />
       {!props.isRemoveInputSelector && (
         <div>
           {openPicker && (
             <SelectValues
               renderData={renderData}
-              refChild={props.refChild}
+              refValue={props.refChild.current.value}
               onClick={onSelectValueClickHandler}
               onMouseOut={onSelectValueMouseOutHandler}
               onMouseOver={onSelectValueMouseOverHandler}

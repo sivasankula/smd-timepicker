@@ -1,14 +1,20 @@
 import * as React from 'react'
 import Input from './Components/Input'
 import SelectAmPm from './Components/SelectAmPm'
-import { defaultOptions } from './Constants/DefaultData.enum'
-// import timepickerStyles from './styles.module.css'
+import {
+  allowed24Formats,
+  allowedFormats,
+  default24Format,
+  defaultFormat,
+  defaultOptions
+} from './Constants/DefaultData.enum'
+import timepickerStyles from './styles.module.css'
 
 interface Props {
   value?: string
   is24Hours?: boolean
   removeInputSelector?: boolean
-  onChange: (e: any) => void
+  onChange?: (e: any) => void
   hoursPlaceholder?: string
   minutesPlaceholder?: string
   isIncludesSeconds?: boolean
@@ -21,38 +27,83 @@ interface Props {
   format?: string
 }
 
+let timeFormatGlobal: any = defaultFormat
 const SMDTimePicker = (props: Props) => {
   const {
     value = '',
     is24Hours = false,
     // onChange = (e: any) => {},
-    hoursPlaceholder = 'HH',
-    minutesPlaceholder = 'MM',
-    secondsPlaceholder = 'SS',
+    hoursPlaceholder = 'hh',
+    minutesPlaceholder = 'mm',
+    secondsPlaceholder = 'ss',
     isIncludesSeconds = false,
-    inputStyles,
-    selectClass,
-    selectStyle,
-    inputClass,
-    selectOptions
-    // format,
+    inputStyles = {},
+    selectClass = '',
+    selectStyle = {},
+    inputClass = '',
+    selectOptions = defaultOptions,
+    format = 'hh:mm:ss'
   } = props
   const hoursRef = React.useRef<any>(null)
   const minutesRef = React.useRef<any>(null)
   const secondsRef = React.useRef<any>(null)
   const selectRef = React.useRef<any>(null)
+  // const [timeFormat, setTimeFormat] = React.useState(defaultFormat)
   // const minSelectRef = React.useRef<any>(null)
   React.useEffect(() => {
+    if (format) {
+      if (is24Hours) {
+        const getFormatData = allowed24Formats.filter(
+          (formatItem: any) => formatItem.format === format
+        )
+        if (getFormatData.length) {
+          // setTimeFormat(getFormatData[0])
+          timeFormatGlobal = getFormatData[0]
+        } else {
+          // setTimeFormat(default24Format)
+          timeFormatGlobal = default24Format
+        }
+      } else {
+        const getFormatData = allowedFormats.filter(
+          (formatItem: any) => formatItem.format === format
+        )
+        if (getFormatData.length) {
+          // setTimeFormat(getFormatData[0])
+          timeFormatGlobal = getFormatData[0]
+        }
+      }
+    }
+    console.log(timeFormatGlobal)
     if (value) {
       const Tvalue = value || ''
       if (value.split(' ').length === 2) {
         const timeValue = Tvalue.split(' ')
         let amPm = timeValue[1]
-        amPm = amPm[0] === 'A' || amPm[0] === 'a' ? 'am' : 'pm'
-        const hoursValue = timeValue[0].split(':')[0]
-        const minutesValue = timeValue[0].split(':')[1]
+        amPm = amPm[0] === 'P' || amPm[0] === 'p' ? 'pm' : 'am'
+        let hoursValue = timeValue[0].split(':')[0]
+        let minutesValue = timeValue[0].split(':')[1]
+        hoursValue =
+          hoursValue.length === 2
+            ? hoursValue
+            : hoursValue.length === 1
+            ? `0${hoursValue}`
+            : '12'
+        minutesValue =
+          minutesValue.length === 2
+            ? minutesValue
+            : minutesValue.length === 1
+            ? `0${minutesValue}`
+            : '00'
+        hoursValue = +hoursValue <= 12 ? hoursValue : '12'
+        minutesValue = +minutesValue <= 59 ? minutesValue : '00'
         if (isIncludesSeconds) {
-          const secondsValue = timeValue[0].split(':')[2]
+          let secondsValue = timeValue[0].split(':')[2]
+          secondsValue =
+            secondsValue.length === 2
+              ? secondsValue
+              : secondsValue.length === 1
+              ? `0${secondsValue}`
+              : '00'
           if (secondsRef && secondsRef.current) {
             secondsRef.current.value = secondsValue
           }
@@ -69,10 +120,14 @@ const SMDTimePicker = (props: Props) => {
       } else {
         const Tvalue = value || ''
         const timeValue = Tvalue.split(':')
-        let hoursValue = timeValue[0]
+        const hoursValue = timeValue[0]
         const minutesValue = timeValue[1]
-        hoursValue =
-          +hoursValue > 12 ? JSON.stringify(+hoursValue - 12) : hoursValue
+        if (isIncludesSeconds) {
+          const secondsValue = timeValue[2]
+          if (secondsRef && secondsRef?.current) {
+            secondsRef.current.value = secondsValue
+          }
+        }
         if (hoursRef && hoursRef?.current) {
           hoursRef.current.value =
             hoursValue.length === 1 ? `0${hoursValue}` : hoursValue
@@ -95,7 +150,9 @@ const SMDTimePicker = (props: Props) => {
           selectRef.current.focus()
         }
       } else if (e.target.name === 'seconds') {
-        selectRef.current.focus()
+        if (!is24Hours) {
+          selectRef.current.focus()
+        }
       }
     } else if (e.key === 'ArrowLeft') {
       if (e.target.name === 'minutes') {
@@ -112,8 +169,21 @@ const SMDTimePicker = (props: Props) => {
           minutesRef.current.focus()
         }
       } else if (e.target.name === 'minutes') {
+        if (
+          e.target.value.length === 0 &&
+          minutesRef.current.value.length === 2
+        ) {
+          const valueElement = document.getElementById(
+            `${minutesRef.current.value}`
+          )
+          if (valueElement) {
+            valueElement.style.backgroundColor = 'white'
+          }
+        }
         if (minutesRef.current.value === '') {
           hoursRef.current.focus()
+        } else {
+          minutesRef.current.focus()
         }
       } else if (e.target.name === 'selectAMPM') {
         if (selectRef.current.value === '') {
@@ -127,7 +197,7 @@ const SMDTimePicker = (props: Props) => {
   const getFormateOutput = () => {
     let outputValue = `${hoursRef.current.value}:${minutesRef.current.value}`
     if (isIncludesSeconds) {
-      outputValue += secondsRef.current.value
+      outputValue += ':' + secondsRef.current.value
     }
     if (!is24Hours) {
       outputValue += ' ' + selectRef.current.value
@@ -166,146 +236,174 @@ const SMDTimePicker = (props: Props) => {
       return false
     }
   }
-  const onChangeHRHandler = (event: any) => {
+  const onChangeHRHandler = (event: any, isValid: boolean) => {
     event.persist()
-    if (event.target.value.length < 3) {
+    if (
+      (event.target.name === 'hours' && +event.target.value > 24) ||
+      ((event.target.name === 'minutes' || event.target.name === 'seconds') &&
+        +event.target.value > 59) ||
+      !isValid
+    ) {
       if (event.target.name === 'hours') {
-        if (is24Hours) {
-          if (
-            event.target.value !== '0' &&
-            event.target.value !== '1' &&
-            event.target.value !== '2'
-          ) {
-            if (event.target.value !== '') {
-              if (event.target.value.length === 1) {
-                hoursRef.current.value = `0${event.target.value}`
-              }
-              if (event.target.value[0] === '2') {
-                let isGreater = false
-                if (
-                  event.target.value === '20' ||
-                  event.target.value === '21' ||
-                  event.target.value === '22' ||
-                  event.target.value === '23'
-                ) {
-                  isGreater = false
-                } else {
-                  isGreater = true
-                  hoursRef.current.value = hoursRef.current.value[0]
-                }
-                if (!isGreater) {
-                  minutesRef.current.focus()
-                }
-              } else {
-                minutesRef.current.focus()
-              }
-            }
-          }
+        hoursRef.current.value = ''
+        minutesRef.current.focus()
+      } else if (event.target.name === 'minutes') {
+        minutesRef.current.value = ''
+        if (isIncludesSeconds) {
+          secondsRef.current.focus()
         } else {
-          if (event.target.value !== '1' && event.target.value !== '0') {
-            if (event.target.value !== '') {
-              if (event.target.value.length === 1) {
-                hoursRef.current.value = `0${event.target.value}`
-              }
-              if (
-                event.target.value.length === 2 &&
-                event.target.value[0] === '1'
-              ) {
-                if (
-                  !(
-                    event.target.value === '10' ||
-                    event.target.value === '11' ||
-                    event.target.value === '12'
-                  )
-                ) {
-                  hoursRef.current.value = event.target.value[0]
-                } else {
-                  minutesRef.current.focus()
-                }
-              } else if (event.target.value === '00') {
-                hoursRef.current.value = '0'
-              } else {
-                minutesRef.current.focus()
-              }
-            }
+          if (!is24Hours) {
+            selectRef.current.focus()
           }
         }
-      } else if (
-        event.target.name === 'minutes' ||
-        event.target.name === 'seconds'
-      ) {
-        if (event.target.value.length === 1) {
-          if (
-            event.target.value === '6' ||
-            event.target.value === '7' ||
-            event.target.value === '8' ||
-            event.target.value === '9'
-          ) {
-            if (event.target.name === 'minutes') {
-              minutesRef.current.value = `0${event.target.value}`
-              if (isIncludesSeconds) secondsRef.current.focus()
-              else if (!is24Hours) selectRef.current.focus()
-            } else {
-              secondsRef.current.value = `0${event.target.value}`
-              if (!is24Hours) selectRef.current.focus()
-            }
-          }
-        } else {
-          if (event.target.name === 'minutes') {
-            if (isIncludesSeconds) secondsRef.current.focus()
-            else if (!is24Hours) selectRef.current.focus()
-          } else {
-            if (!is24Hours) selectRef.current.focus()
-          }
+      } else {
+        secondsRef.current.value = ''
+        if (!is24Hours) {
+          selectRef.current.focus()
         }
       }
     } else {
-      if (event.target.name === 'hours') {
-        if (event.target.value[0] !== '0') {
-          hoursRef.current.value = hoursRef.current.value.substring(1)
-        } else {
-          hoursRef.current.value = hoursRef.current.value.substring(0, 2)
+      if (event.target.value.length < 3) {
+        if (event.target.name === 'hours') {
+          if (is24Hours) {
+            if (
+              event.target.value !== '0' &&
+              event.target.value !== '1' &&
+              event.target.value !== '2'
+            ) {
+              if (event.target.value !== '') {
+                if (event.target.value.length === 1) {
+                  hoursRef.current.value = `0${event.target.value}`
+                }
+                if (event.target.value[0] === '2') {
+                  let isGreater = false
+                  if (
+                    event.target.value === '20' ||
+                    event.target.value === '21' ||
+                    event.target.value === '22' ||
+                    event.target.value === '23'
+                  ) {
+                    isGreater = false
+                  } else {
+                    isGreater = true
+                    hoursRef.current.value = hoursRef.current.value[0]
+                  }
+                  if (!isGreater) {
+                    minutesRef.current.focus()
+                  }
+                } else {
+                  minutesRef.current.focus()
+                }
+              }
+            }
+            if (+event.target.value > 23) {
+              hoursRef.current.value = ''
+            }
+          } else {
+            if (event.target.value !== '1' && event.target.value !== '0') {
+              if (event.target.value !== '') {
+                if (event.target.value.length === 1) {
+                  hoursRef.current.value = `0${event.target.value}`
+                }
+                if (
+                  event.target.value.length === 2 &&
+                  event.target.value[0] === '1'
+                ) {
+                  if (
+                    !(
+                      event.target.value === '10' ||
+                      event.target.value === '11' ||
+                      event.target.value === '12'
+                    )
+                  ) {
+                    hoursRef.current.value = event.target.value[0]
+                  } else {
+                    minutesRef.current.focus()
+                  }
+                } else if (event.target.value === '00') {
+                  hoursRef.current.value = '0'
+                } else {
+                  minutesRef.current.focus()
+                }
+              }
+            }
+          }
+        } else if (
+          event.target.name === 'minutes' ||
+          event.target.name === 'seconds'
+        ) {
+          if (event.target.value !== '') {
+            if (event.target.value.length === 1) {
+              if (
+                event.target.value === '6' ||
+                event.target.value === '7' ||
+                event.target.value === '8' ||
+                event.target.value === '9'
+              ) {
+                if (event.target.name === 'minutes') {
+                  minutesRef.current.value = `0${event.target.value}`
+                  if (isIncludesSeconds) secondsRef.current.focus()
+                  else if (!is24Hours) selectRef.current.focus()
+                } else {
+                  secondsRef.current.value = `0${event.target.value}`
+                  if (!is24Hours) selectRef.current.focus()
+                }
+              }
+            } else {
+              if (event.target.name === 'minutes') {
+                if (isIncludesSeconds) secondsRef.current.focus()
+                else if (!is24Hours) selectRef.current.focus()
+              } else {
+                if (!is24Hours) selectRef.current.focus()
+              }
+            }
+          }
         }
-        minutesRef.current.focus()
-      } else if (event.target.name === 'minutes') {
-        if (event.target.value[0] !== '0') {
-          minutesRef.current.value = minutesRef.current.value.substring(1)
-        } else {
-          minutesRef.current.value = minutesRef.current.value.substring(0, 2)
+      } else {
+        if (event.target.name === 'hours') {
+          if (event.target.value[0] !== '0') {
+            hoursRef.current.value = hoursRef.current.value.substring(1)
+          } else {
+            hoursRef.current.value = hoursRef.current.value.substring(0, 2)
+          }
+          minutesRef.current.focus()
+        } else if (event.target.name === 'minutes') {
+          if (event.target.value[0] !== '0') {
+            minutesRef.current.value = minutesRef.current.value.substring(1)
+          } else {
+            minutesRef.current.value = minutesRef.current.value.substring(0, 2)
+          }
+          if (isIncludesSeconds) secondsRef.current.focus()
+          else if (!is24Hours) selectRef.current.focus()
+        } else if (event.target.name === 'seconds') {
+          if (event.target.value[0] !== '0') {
+            secondsRef.current.value = secondsRef.current.value.substring(1)
+          } else {
+            secondsRef.current.value = secondsRef.current.value.substring(0, 2)
+          }
+          if (!is24Hours) selectRef.current.focus()
         }
-        if (isIncludesSeconds) secondsRef.current.focus()
-        else if (!is24Hours) selectRef.current.focus()
-      } else if (event.target.name === 'seconds') {
-        if (event.target.value[0] !== '0') {
-          secondsRef.current.value = secondsRef.current.value.substring(1)
-        } else {
-          secondsRef.current.value = secondsRef.current.value.substring(0, 2)
-        }
-        if (!is24Hours) selectRef.current.focus()
       }
-    }
-    if (getAllEnteredValues()) {
-      props.onChange(getFormateOutput())
+      if (getAllEnteredValues()) {
+        props.onChange && props.onChange(getFormateOutput())
+      }
     }
   }
 
   const onSelectValue = () => {
     if (getAllEnteredValues()) {
-      props.onChange(getFormateOutput())
+      props.onChange && props.onChange(getFormateOutput())
     }
   }
   const ongetManuallySelectedValue = () => {
     if (getAllEnteredValues()) {
-      props.onChange(getFormateOutput())
+      props.onChange && props.onChange(getFormateOutput())
     }
   }
 
   return (
     <div>
-      <div>
-        <h1 className='siva'>hii siva lib works</h1>
-      </div>
-      <div style={{ width: '100%', display: 'flex' }}>
+      <div className={timepickerStyles.timepicker__align}>
         <div>
           <Input
             type='text'
@@ -314,7 +412,7 @@ const SMDTimePicker = (props: Props) => {
             is24={props.is24Hours || false}
             refChild={hoursRef}
             placeholder={
-              hoursPlaceholder === undefined ? 'HH' : hoursPlaceholder
+              hoursPlaceholder === undefined ? 'hh' : hoursPlaceholder
             }
             className={`${inputClass || ''}`}
             style={{
@@ -337,7 +435,7 @@ const SMDTimePicker = (props: Props) => {
             refChild={minutesRef}
             name='minutes'
             placeholder={
-              minutesPlaceholder === undefined ? 'MM' : minutesPlaceholder
+              minutesPlaceholder === undefined ? 'mm' : minutesPlaceholder
             }
             className={`${inputClass || ''}`}
             style={{
@@ -361,7 +459,7 @@ const SMDTimePicker = (props: Props) => {
               name='seconds'
               is24={props.is24Hours || false}
               placeholder={
-                secondsPlaceholder === undefined ? 'SS' : secondsPlaceholder
+                secondsPlaceholder === undefined ? 'ss' : secondsPlaceholder
               }
               className={`${inputClass || ''}`}
               style={{
