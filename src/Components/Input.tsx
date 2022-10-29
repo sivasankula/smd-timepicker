@@ -25,6 +25,7 @@ interface Props {
 const Input = (props: Props) => {
   const [isDirtyIn, setIsDirtyIn] = useState(false)
   const [openPicker, setOpenPicker] = useState(false)
+  const [isOpenFor, setIsOpenFor] = useState('')
   const [renderData, setRenderData] = useState<any>([])
   const [isInside, setIsInside] = useState(false)
   const [fetchRenderData, setFetchRenderData] = useState<any>([])
@@ -76,6 +77,7 @@ const Input = (props: Props) => {
     e.persist()
     setRenderData([...fetchRenderData])
     setOpenPicker(true)
+    setIsOpenFor(e.target.name)
   }
 
   const onChangeHandler = (e: any) => {
@@ -93,7 +95,9 @@ const Input = (props: Props) => {
       setOpenPicker(false)
     }
     let isValidPastd = true
-    console.log('e.ta', e.target.value)
+    if (e.target.value === '') {
+      setRenderData([...fetchRenderData])
+    }
     if (isNaN(e.target.value)) {
       isValidPastd = false
     }
@@ -129,31 +133,71 @@ const Input = (props: Props) => {
 
   const onKeyDownValidate = (e: any) => {
     e.persist()
-    console.log(e)
-    if (e.key === 'ArrowRight') {
-      if (e.target.name === 'hours') {
-        setOpenPicker(false)
-      } else if (e.target.name === 'minutes') {
-        setOpenPicker(false)
-      } else if (e.target.name === 'seconds') {
-        if (!props.is24) {
-          setOpenPicker(false)
+    if (e.key === 'ArrowUp') {
+      if (
+        (e.target.name !== 'hours' &&
+          e.target.value !== '' &&
+          +e.target.value > 0) ||
+        (e.target.name === 'hours' &&
+          e.target.value !== '' &&
+          +e.target.value > 1) ||
+        (e.target.name === 'hours' &&
+          e.target.value !== '' &&
+          +e.target.value > 0 &&
+          props.is24)
+      ) {
+        let data: any = +e.target.value - 1
+        if (JSON.stringify(data).length === 1) {
+          data = `0${data}`
         }
+        props.refChild.current.value = data
+        setRenderData([...fetchRenderData])
+        props.onManuallySelect()
       }
-    } else if (e.key === 'ArrowLeft') {
-      if (e.target.name === 'minutes') {
-        setOpenPicker(false)
-      } else if (e.target.name === 'seconds') {
-        setOpenPicker(false)
-      } else if (e.target.name === 'selectAMPM') {
+    } else if (e.key === 'ArrowDown') {
+      if (
+        +e.target.value >= 0 &&
+        ((+e.target.value < 59 && e.target.name !== 'hours') ||
+          (+e.target.value < 23 && e.target.name === 'hours' && props.is24) ||
+          (+e.target.value < 12 && e.target.name === 'hours' && !props.is24))
+      ) {
+        let data: any = +e.target.value + 1
+        if (JSON.stringify(data).length === 1) {
+          data = `0${data}`
+        }
+        if (e.target.value === '') {
+          if (e.target.name === 'hours') {
+            if (props.is24) data = '00'
+          } else {
+            data = '00'
+          }
+        }
+        props.refChild.current.value = data
+        setRenderData([...fetchRenderData])
+        props.onManuallySelect()
       }
-    } else if (e.key === 'Backspace') {
-      // const dataEle = document.getElementById(`59`)
-      // if (dataEle) {
-      //   dataEle.click()
-      // }
+    } else {
+      if (e.key === 'ArrowRight') {
+        if (e.target.name === 'hours') {
+          setOpenPicker(false)
+        } else if (e.target.name === 'minutes') {
+          setOpenPicker(false)
+        } else if (e.target.name === 'seconds') {
+          if (!props.is24) {
+            setOpenPicker(false)
+          }
+        }
+      } else if (e.key === 'ArrowLeft') {
+        if (e.target.name === 'minutes') {
+          setOpenPicker(false)
+        } else if (e.target.name === 'seconds') {
+          setOpenPicker(false)
+        } else if (e.target.name === 'selectAMPM') {
+        }
+      } else if (e.key === 'Backspace') {
+      }
+      props.onKeyDown(e)
     }
-    props.onKeyDown(e)
   }
 
   return (
@@ -182,6 +226,7 @@ const Input = (props: Props) => {
         <div>
           {openPicker && (
             <SelectValues
+              isOpenFor={isOpenFor}
               renderData={renderData}
               refValue={props.refChild.current.value}
               onClick={onSelectValueClickHandler}

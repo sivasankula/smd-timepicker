@@ -44,7 +44,6 @@ const SMDTimePicker = (props: Props) => {
     selectOptions = defaultOptions,
     format = 'hh:mm:ss'
   } = props
-  console.log(props)
   const hoursRef = React.useRef<any>(null)
   const minutesRef = React.useRef<any>(null)
   const secondsRef = React.useRef<any>(null)
@@ -242,7 +241,6 @@ const SMDTimePicker = (props: Props) => {
   }
   const onChangeHRHandler = (event: any, isValid: boolean) => {
     event.persist()
-    console.log('is valid ', isValid)
     if (
       (event.target.name === 'hours' &&
         +event.target.value > 24 &&
@@ -252,7 +250,6 @@ const SMDTimePicker = (props: Props) => {
         event.target.value.length > 3) ||
       !isValid
     ) {
-      console.log('inside', +event.target.value)
       if (event.target.name === 'hours') {
         hoursRef.current.value = ''
         minutesRef.current.focus()
@@ -423,12 +420,11 @@ const SMDTimePicker = (props: Props) => {
             placeholder={
               hoursPlaceholder === undefined ? 'hh' : hoursPlaceholder
             }
-            className={`${inputClass || ''}`}
+            className={`${inputClass || ''} ${
+              timepickerStyles.timepicker__input
+            }`}
             style={{
-              ...(inputStyles || {}),
-              width: '30px',
-              textAlign: 'center',
-              margin: '0 1px 0 1px'
+              ...(inputStyles || {})
             }}
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
@@ -446,12 +442,11 @@ const SMDTimePicker = (props: Props) => {
             placeholder={
               minutesPlaceholder === undefined ? 'mm' : minutesPlaceholder
             }
-            className={`${inputClass || ''}`}
+            className={`${inputClass || ''} ${
+              timepickerStyles.timepicker__input
+            }`}
             style={{
-              ...(inputStyles || {}),
-              width: '30px',
-              textAlign: 'center',
-              margin: '0 1px 0 1px'
+              ...(inputStyles || {})
             }}
             onChange={onChangeHRHandler}
             onKeyDown={onKeyDownCheck}
@@ -470,12 +465,11 @@ const SMDTimePicker = (props: Props) => {
               placeholder={
                 secondsPlaceholder === undefined ? 'ss' : secondsPlaceholder
               }
-              className={`${inputClass || ''}`}
+              className={`${inputClass || ''} ${
+                timepickerStyles.timepicker__input
+              }`}
               style={{
-                ...(inputStyles || {}),
-                width: '30px',
-                textAlign: 'center',
-                margin: '0 1px 0 1px'
+                ...(inputStyles || {})
               }}
               onKeyDown={onKeyDownCheck}
               onChange={onChangeHRHandler}
