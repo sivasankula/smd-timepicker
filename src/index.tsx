@@ -44,6 +44,7 @@ const SMDTimePicker = (props: Props) => {
     selectOptions = defaultOptions,
     format = 'hh:mm:ss'
   } = props
+  console.log(props)
   const hoursRef = React.useRef<any>(null)
   const minutesRef = React.useRef<any>(null)
   const secondsRef = React.useRef<any>(null)
@@ -74,6 +75,9 @@ const SMDTimePicker = (props: Props) => {
       }
     }
     console.log(timeFormatGlobal)
+  }, [])
+
+  React.useEffect(() => {
     if (value) {
       const Tvalue = value || ''
       if (value.split(' ').length === 2) {
@@ -137,7 +141,7 @@ const SMDTimePicker = (props: Props) => {
         }
       }
     }
-  }, [])
+  }, [value])
   const onKeyDownCheck = (e: any) => {
     e.persist()
     if (e.key === 'ArrowRight') {
@@ -238,12 +242,17 @@ const SMDTimePicker = (props: Props) => {
   }
   const onChangeHRHandler = (event: any, isValid: boolean) => {
     event.persist()
+    console.log('is valid ', isValid)
     if (
-      (event.target.name === 'hours' && +event.target.value > 24) ||
+      (event.target.name === 'hours' &&
+        +event.target.value > 24 &&
+        event.target.value.length > 3) ||
       ((event.target.name === 'minutes' || event.target.name === 'seconds') &&
-        +event.target.value > 59) ||
+        +event.target.value > 59 &&
+        event.target.value.length > 3) ||
       !isValid
     ) {
+      console.log('inside', +event.target.value)
       if (event.target.name === 'hours') {
         hoursRef.current.value = ''
         minutesRef.current.focus()

@@ -92,11 +92,9 @@ const Input = (props: Props) => {
     if (e.target.value.length === 2) {
       setOpenPicker(false)
     }
-    let isValidPastd = false
-    try {
-      JSON.parse(e.target.value)
-      isValidPastd = true
-    } catch (error) {
+    let isValidPastd = true
+    console.log('e.ta', e.target.value)
+    if (isNaN(e.target.value)) {
       isValidPastd = false
     }
     props.onChange(e, isValidPastd)
@@ -131,6 +129,7 @@ const Input = (props: Props) => {
 
   const onKeyDownValidate = (e: any) => {
     e.persist()
+    console.log(e)
     if (e.key === 'ArrowRight') {
       if (e.target.name === 'hours') {
         setOpenPicker(false)

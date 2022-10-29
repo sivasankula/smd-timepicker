@@ -10,12 +10,16 @@ const App = () => {
   }
   
   const [timeV, setTime] = useState('')
-
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setTime('09:23:56 pm')
+  //   },3000)
+  // }, [])
   return(
     <div>
       <h1 className='success' >My react library works good!! -- time is --{timeV}</h1>
       <div>
-        <SMDTimePicker is24Hours={true} value={timeV} onChange={onSelectingTime} isIncludesSeconds={true}  format='h:m:s'/>
+        <SMDTimePicker is24Hours={false} value={timeV} onChange={onSelectingTime} isIncludesSeconds={true}  format='hh:mm:ss'/>
       </div>
     </div>
   )

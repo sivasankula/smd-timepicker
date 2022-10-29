@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import timepickerStyles from '../styles.module.css'
 
 interface Props {
@@ -10,9 +10,18 @@ interface Props {
 }
 
 function SelectValues(props: Props) {
+  useEffect(() => {
+    console.log(props.refValue)
+    if (props.refValue) {
+      const dataEle = document.getElementById(`${props.refValue}`)
+      if (dataEle) {
+        dataEle.scroll({ behavior: 'smooth', top: 300 })
+      }
+    }
+  }, [])
   return (
     <div className={timepickerStyles.custom__select__input}>
-      <div id='60' onClick={(e) => console.log('eee', e)}>
+      <div>
         {props.renderData.map((item: any) => (
           <div
             id={`${item.value}`}
