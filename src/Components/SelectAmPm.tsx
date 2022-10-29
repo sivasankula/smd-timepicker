@@ -3,6 +3,7 @@ import { defaultOptions } from '../Constants/DefaultData.enum'
 import timepickerStyles from '../styles.module.css'
 
 interface Props {
+  id: string
   data: any
   refChild: any
   name: string
@@ -35,11 +36,16 @@ const SelectAmPm = (props: Props) => {
 
   return (
     <select
+      id={props.id}
       ref={props.refChild}
       onChange={onSelectingValue}
       onKeyDown={props.onKeyDown}
-      className={`${props.className} ${isDirty && timepickerStyles.err__input}`}
-      style={props.style}
+      className={`${props.className} ${
+        timepickerStyles.timepicker__selectContainer
+      } ${isDirty && timepickerStyles.err__input}`}
+      style={{
+        ...props.style
+      }}
       name={props.name}
       value={selectedOption}
       onBlur={onBlurSelectValue}
