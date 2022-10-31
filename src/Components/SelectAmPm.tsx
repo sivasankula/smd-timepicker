@@ -23,6 +23,11 @@ const SelectAmPm = (props: Props) => {
     // setOptionsList(data.filter((fItem: any) => fItem.value !== ''))
     setSelectedOption(e.target.value)
     props.onSelect(e.target.value)
+    if (e.target.value === '') {
+      setIsDirty(true)
+    } else {
+      setIsDirty(false)
+    }
   }
 
   const onBlurSelectValue = (e: any) => {

@@ -14,12 +14,22 @@ interface Props {
   type: string
   refChild: any
   placeholder: string
-  className: any
-  style: any
+  className: string
+  style: React.CSSProperties
   name: string
   id: string
   is24: boolean
   isRemoveInputSelector: boolean
+  timeSelectConfig?: {
+    timeOuterContainer?: React.CSSProperties
+    timeInsideContainer?: React.CSSProperties
+    selectSpecificData?: {
+      isSelectedBGcolor: string
+      isHoveredBGcolor: string
+      isSelectedFontColor: string
+      isHoveredFontColor: string
+    }
+  }
 }
 
 const Input = (props: Props) => {
@@ -49,10 +59,16 @@ const Input = (props: Props) => {
   }
 
   const onBlurInput = (e: any) => {
-    e.persist()
-    if (!isInside) {
-      setOpenPicker(false)
+    if (props.refChild.current.value.length === 2) {
+      if (!isInside) {
+        setOpenPicker(false)
+      }
+    } else {
+      setTimeout(() => {
+        setOpenPicker(false)
+      }, 400)
     }
+    e.persist()
     if (
       props.refChild.current.value.length === 1 ||
       props.refChild.current.value === ''
@@ -63,11 +79,6 @@ const Input = (props: Props) => {
     } else {
       if (!isInside) {
         setIsDirtyIn(false)
-      }
-    }
-    if (props.refChild.current.value.length === 2) {
-      if (!isInside) {
-        setOpenPicker(false)
       }
     }
     setIsInside(false)
@@ -93,6 +104,7 @@ const Input = (props: Props) => {
     }
     if (e.target.value.length === 2) {
       setOpenPicker(false)
+      setIsDirtyIn(false)
     }
     let isValidPastd = true
     if (e.target.value === '') {
@@ -115,8 +127,16 @@ const Input = (props: Props) => {
     setIsInside(false)
     const docData = document.getElementById(value)
     if (docData) {
-      if (docData.style.backgroundColor !== 'rgb(63, 63, 255)') {
-        docData.style.backgroundColor = 'white'
+      if (
+        docData.style.backgroundColor !==
+        (props.timeSelectConfig?.selectSpecificData?.isSelectedBGcolor ||
+          'rgb(63, 63, 255)')
+      ) {
+        docData.style.backgroundColor =
+          props.timeSelectConfig?.timeInsideContainer?.backgroundColor ||
+          'white'
+        docData.style.color =
+          props.timeSelectConfig?.timeInsideContainer?.color || 'black'
       }
     }
   }
@@ -125,8 +145,17 @@ const Input = (props: Props) => {
     setIsInside(true)
     const docData = document.getElementById(value)
     if (docData) {
-      if (docData.style.backgroundColor !== 'rgb(63, 63, 255)') {
-        docData.style.backgroundColor = 'lightblue'
+      if (
+        docData.style.backgroundColor !==
+        (props.timeSelectConfig?.selectSpecificData?.isSelectedBGcolor ||
+          'rgb(63, 63, 255)')
+      ) {
+        docData.style.backgroundColor =
+          props.timeSelectConfig?.selectSpecificData?.isHoveredBGcolor ||
+          'lightblue'
+        docData.style.color =
+          props.timeSelectConfig?.selectSpecificData?.isHoveredFontColor ||
+          'black'
       }
     }
   }
@@ -229,6 +258,7 @@ const Input = (props: Props) => {
               isOpenFor={isOpenFor}
               renderData={renderData}
               refValue={props.refChild.current.value}
+              timeSelectConfig={props.timeSelectConfig || {}}
               onClick={onSelectValueClickHandler}
               onMouseOut={onSelectValueMouseOutHandler}
               onMouseOver={onSelectValueMouseOverHandler}
