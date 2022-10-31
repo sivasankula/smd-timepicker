@@ -339,7 +339,6 @@ const SMDTimePicker = (props: Props) => {
                     hoursRef.current.value = `0${event.target.value[0]}`
                     minutesRef.current.focus()
                   } else {
-                    console.log('inside the ele', event.target.value)
                     minutesRef.current.focus()
                   }
                 } else if (event.target.value === '00') {
@@ -349,7 +348,6 @@ const SMDTimePicker = (props: Props) => {
                   (event.target.value[1] !== '0' ||
                     event.target.value[1] !== '1')
                 ) {
-                  console.log('event', event.target.value)
                   if (event.target.value[1] === '0') {
                     hoursRef.current.value = `${event.target.value[1]}`
                   } else {
