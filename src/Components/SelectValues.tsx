@@ -11,8 +11,8 @@ interface Props {
     selectSpecificData?: {
       isSelectedBGcolor: string
       isHoveredBGcolor: string
-      isSelectedColor: string
-      isHoveredColor: string
+      isSelectedFontColor: string
+      isHoveredFontColor: string
     }
   }
   onClick: (value: string) => void
@@ -65,8 +65,8 @@ function SelectValues(props: Props) {
             ...props.timeSelectConfig?.timeInsideContainer,
             color:
               props.refValue === item.value
-                ? props.timeSelectConfig?.selectSpecificData?.isSelectedColor ||
-                  'black'
+                ? props.timeSelectConfig?.selectSpecificData
+                    ?.isSelectedFontColor || 'black'
                 : props.timeSelectConfig?.timeInsideContainer?.color || 'black',
             backgroundColor:
               props.refValue === item.value

@@ -26,8 +26,8 @@ interface Props {
     selectSpecificData?: {
       isSelectedBGcolor: string
       isHoveredBGcolor: string
-      isSelectedColor: string
-      isHoveredColor: string
+      isSelectedFontColor: string
+      isHoveredFontColor: string
     }
   }
 }
@@ -154,7 +154,8 @@ const Input = (props: Props) => {
           props.timeSelectConfig?.selectSpecificData?.isHoveredBGcolor ||
           'lightblue'
         docData.style.color =
-          props.timeSelectConfig?.selectSpecificData?.isHoveredColor || 'black'
+          props.timeSelectConfig?.selectSpecificData?.isHoveredFontColor ||
+          'black'
       }
     }
   }
