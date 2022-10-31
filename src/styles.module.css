@@ -39,6 +39,9 @@
   height: 100px;
   margin-left: 3px;
   overflow: auto;
+  position: absolute;
+  z-index: 999;
+  background-color: white;
 }
 
 .timeValue__container {

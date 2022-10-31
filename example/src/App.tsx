@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import SMDTimePicker  from 'smd-timepicker'
 import 'smd-timepicker/dist/index.css'
+import './AppExample.css'
 
 const App = () => {
   const onSelectingTime = (time: any) => {
@@ -18,9 +19,11 @@ const App = () => {
   return(
     <div>
       <h1 className='success' >My react library works good!! -- time is --{timeV}</h1>
+      {/* <input type='date' /> */}
       <div>
-        <SMDTimePicker is24Hours={false} value={timeV} onChange={onSelectingTime} isIncludesSeconds={true}  format='hh:mm:ss'/>
+        <SMDTimePicker onChange={onSelectingTime} />
       </div>
+      <div>hii siva sankula siva</div>
     </div>
   )
 }

@@ -44,42 +44,40 @@ class Example extends Component {
 ```
 ## props
 
-
-| Prop           | Default Value & Type 				 | Description                    |
-| :------------: |:---------------:| :-----:|
-|    onChange    | onChange: (e: any) => void    | Captures the output in the     |
-|						     |												       | format of hh:mm a				      |
-|						     |												       |											          |
-| format   	   	|  hh:mm a  (string)     				 |   can able to pass the format  |
-|						    |												         | like hh:mm a or HH:mm 	        |
-|						    |												         |											          |
-|  						  |						   						       |    if want pass default		    |
-| value 			  | "" (string)  						     	|as hh:mm a format or		          |
-|						    |												        |HH:mm format 					          |
-|						    |										        		|											            |
-| is24Hours  	 | false (Boolean)       			  	 |   if we want 24 hrs format     |
-|						   |												          | then set this to true				  |
-|						   |												          |											          |
-| isIncludesSeconds|  false {Boolean)  		        | if you want seconds  also    	|
-|						       |												      |											          |
-| hoursPlaceholder |  `HH` {string)               | for hours input               |
-|						       |											      	|											          |
-|minutesPlaceholder|  `MM` {string)               | for minutes input             |
-|						       |											      	|											          |
-|secondsPlaceholder|  `SS` {string)               | for seconds input             |
-|						       |												      |											          |
-|   inputStyles    |  {...} (styles object)        | use inline styles for input  |
-|						       |												       |											        |
-|   inputClass     |  "" (className)               | can able to provide css      |
-|						       |												      |											          |
-|   selectStyle    |  {...} (styles object)       | use inline styles for select  |
-|						       |												      |											          |
-|   selectClass    |  "" (className)              | can able to provide css       |
-|						       |												      |											          |
-|  selectOptions   |[{name:'',value:''},..]			  | AM PM select options can be 	|
-| 					    	 |												      | set using this prop 			    |
-|					        	|												      |											          |
-
+| Prop				  | Default Value & Type 				 | Description  |
+| :------------: |:---------------:| :---------------:|
+|    *onChange*   | onChange: (time: string)| Captures the output in the |
+|						|			 => void (function) 				| format of hh:mm a				|
+|						|								|											|
+| *format*   			|  `hh:mm a`  (string)     		 |   can able to pass the format |
+|						|									| like hh:mm a or HH:mm 	|
+|						|									|											|
+|  						 |						   			  |    if want pass default		  |
+| 		*value* 	 | `''` (string)  				|as hh:mm a format or		 |
+|						|								 	|HH:mm format 					 |
+|						|									|											|
+| 	*is24Hours*  	 | `false` (Boolean)       	 |   if we want 24 hrs format |
+|						|									| then set this to true				 |
+|						|												|											|
+| *isIncludesSeconds*|  `false` {Boolean)  		    | if you want seconds  also    	 |
+|						|												|											|
+| *hoursPlaceholder* |  `HH` {string)        | for hours input             |
+|						|												|											|
+|*minutesPlaceholder*|  `MM` {string)      | for minutes input           |
+|						|												|											|
+|*secondsPlaceholder*|  `SS` {string)          | for seconds input           |
+|						|												|											|
+|  *inputStyles*   |  `{...}` (styles object)| use inline styles for input |
+|						|												|											|
+|   *inputClass*     | ` ''` (className) (string)      | can able to provide css     |
+|						|												|											|
+|   *selectStyle*    |  `{...}` (styles object)| use inline styles for select|
+|						|												|											|
+|   *selectClass*    |  `''` (className)       | can able to provide css     |
+|						|												|											|
+|  *selectOptions*|`[{name:'AM',value:'am'},..]`| AM PM select options can be 	|
+| 						 |												| set using this prop 			 |
+|						|												|											|
 ### keywords
     time-picker smd-timepicker custome-timepicker 
 

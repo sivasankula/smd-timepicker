@@ -15,15 +15,25 @@ interface Props {
   is24Hours?: boolean
   removeInputSelector?: boolean
   onChange?: (e: any) => void
+  timeSelectConfig?: {
+    timeOuterContainer?: React.CSSProperties
+    timeInsideContainer?: React.CSSProperties
+    selectSpecificData?: {
+      isSelectedBGcolor: string
+      isHoveredBGcolor: string
+      isSelectedColor: string
+      isHoveredColor: string
+    }
+  }
   hoursPlaceholder?: string
   minutesPlaceholder?: string
   isIncludesSeconds?: boolean
   secondsPlaceholder?: string
-  inputStyles?: any
-  selectStyle?: any
+  inputStyles?: React.CSSProperties
+  selectStyle?: React.CSSProperties
   inputClass?: string
   selectClass?: string
-  selectOptions?: any
+  selectOptions?: { name: string; value: string }[]
   format?: string
 }
 
@@ -41,6 +51,7 @@ const SMDTimePicker = (props: Props) => {
     selectClass = '',
     selectStyle = {},
     inputClass = '',
+    timeSelectConfig = {},
     selectOptions = defaultOptions,
     format = 'hh:mm:ss'
   } = props
@@ -150,7 +161,9 @@ const SMDTimePicker = (props: Props) => {
         if (isIncludesSeconds) {
           secondsRef.current.focus()
         } else {
-          selectRef.current.focus()
+          if (!is24Hours) {
+            selectRef.current.focus()
+          }
         }
       } else if (e.target.name === 'seconds') {
         if (!is24Hours) {
@@ -328,6 +341,17 @@ const SMDTimePicker = (props: Props) => {
                   }
                 } else if (event.target.value === '00') {
                   hoursRef.current.value = '0'
+                } else if (
+                  event.target.value.length === 2 &&
+                  (event.target.value[1] !== '0' ||
+                    event.target.value[1] !== '1')
+                ) {
+                  if (event.target.value[1] === '0') {
+                    hoursRef.current.value = `${event.target.value[1]}`
+                  } else {
+                    hoursRef.current.value = `0${event.target.value[1]}`
+                    minutesRef.current.focus()
+                  }
                 } else {
                   minutesRef.current.focus()
                 }
@@ -356,6 +380,18 @@ const SMDTimePicker = (props: Props) => {
                 }
               }
             } else {
+              if (
+                event.target.value[0] === '6' ||
+                event.target.value[0] === '7' ||
+                event.target.value[0] === '8' ||
+                event.target.value[0] === '9'
+              ) {
+                if (event.target.name === 'minutes') {
+                  minutesRef.current.value = `0${event.target.value[1]}`
+                } else {
+                  secondsRef.current.value = `0${event.target.value[1]}`
+                }
+              }
               if (event.target.name === 'minutes') {
                 if (isIncludesSeconds) secondsRef.current.focus()
                 else if (!is24Hours) selectRef.current.focus()
@@ -430,6 +466,7 @@ const SMDTimePicker = (props: Props) => {
             onKeyDown={onKeyDownCheck}
             onManuallySelect={ongetManuallySelectedValue}
             isRemoveInputSelector={props.removeInputSelector || false}
+            timeSelectConfig={timeSelectConfig}
           />
         </div>
         <div>
@@ -452,6 +489,7 @@ const SMDTimePicker = (props: Props) => {
             onKeyDown={onKeyDownCheck}
             onManuallySelect={ongetManuallySelectedValue}
             isRemoveInputSelector={props.removeInputSelector || false}
+            timeSelectConfig={timeSelectConfig}
           />
         </div>
         {isIncludesSeconds && (
@@ -475,6 +513,7 @@ const SMDTimePicker = (props: Props) => {
               onChange={onChangeHRHandler}
               onManuallySelect={ongetManuallySelectedValue}
               isRemoveInputSelector={props.removeInputSelector || false}
+              timeSelectConfig={timeSelectConfig}
             />
           </div>
         )}
