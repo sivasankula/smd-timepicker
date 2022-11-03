@@ -16,27 +16,27 @@ interface Props {
 const SelectAmPm = (props: Props) => {
   const data = props.data.length ? props.data : defaultOptions
   const [selectedOption, setSelectedOption] = useState('')
-  const [isDirty, setIsDirty] = useState(false)
+  // const [isDirty, setIsDirty] = useState(false)
   // const [optionsList, setOptionsList] = useState(data)
 
   const onSelectingValue = (e: any) => {
     // setOptionsList(data.filter((fItem: any) => fItem.value !== ''))
     setSelectedOption(e.target.value)
     props.onSelect(e.target.value)
-    if (e.target.value === '') {
-      setIsDirty(true)
-    } else {
-      setIsDirty(false)
-    }
+    // if (e.target.value === '') {
+    //   setIsDirty(true)
+    // } else {
+    //   setIsDirty(false)
+    // }
   }
 
   const onBlurSelectValue = (e: any) => {
     e.persist()
-    if (e.target.value === '') {
-      setIsDirty(true)
-    } else {
-      setIsDirty(false)
-    }
+    // if (e.target.value === '') {
+    //   setIsDirty(true)
+    // } else {
+    //   setIsDirty(false)
+    // }
   }
 
   return (
@@ -45,9 +45,7 @@ const SelectAmPm = (props: Props) => {
       ref={props.refChild}
       onChange={onSelectingValue}
       onKeyDown={props.onKeyDown}
-      className={`${props.className} ${
-        timepickerStyles.timepicker__selectContainer
-      } ${isDirty && timepickerStyles.err__input}`}
+      className={`${props.className} ${timepickerStyles.timepicker__selectContainer}`}
       style={{
         ...props.style
       }}

@@ -4,7 +4,7 @@ import {
   hoursOptions24,
   minsOrSeconds
 } from '../Constants/DefaultData.enum'
-import timepickerStyles from '../styles.module.css'
+// import timepickerStyles from '../styles.module.css'
 import SelectValues from './SelectValues'
 
 interface Props {
@@ -33,7 +33,7 @@ interface Props {
 }
 
 const Input = (props: Props) => {
-  const [isDirtyIn, setIsDirtyIn] = useState(false)
+  // const [isDirtyIn, setIsDirtyIn] = useState(false)
   const [openPicker, setOpenPicker] = useState(false)
   const [isOpenFor, setIsOpenFor] = useState('')
   const [renderData, setRenderData] = useState<any>([])
@@ -74,11 +74,19 @@ const Input = (props: Props) => {
       props.refChild.current.value === ''
     ) {
       if (!isInside) {
-        setIsDirtyIn(true)
+        // setIsDirtyIn(true)
+        if (props.refChild.current.value.length === 1) {
+          props.refChild.current.value = `0${props.refChild.current.value}`
+          if (props.name === 'hours') {
+            if (!props.is24) {
+              props.refChild.current.value = `01`
+            }
+          }
+        }
       }
     } else {
       if (!isInside) {
-        setIsDirtyIn(false)
+        // setIsDirtyIn(false)
       }
     }
     setIsInside(false)
@@ -104,7 +112,7 @@ const Input = (props: Props) => {
     }
     if (e.target.value.length === 2) {
       setOpenPicker(false)
-      setIsDirtyIn(false)
+      // setIsDirtyIn(false)
     }
     let isValidPastd = true
     if (e.target.value === '') {
@@ -119,7 +127,7 @@ const Input = (props: Props) => {
   const onSelectValueClickHandler = (value: string) => {
     props.refChild.current.value = value
     setOpenPicker(false)
-    setIsDirtyIn(false)
+    // setIsDirtyIn(false)
     props.onManuallySelect()
   }
 
@@ -196,7 +204,10 @@ const Input = (props: Props) => {
         }
         if (e.target.value === '') {
           if (e.target.name === 'hours') {
-            if (props.is24) data = '00'
+            if (props.is24) {
+              data = '00'
+              console.log('onsidee')
+            }
           } else {
             data = '00'
           }
@@ -237,9 +248,7 @@ const Input = (props: Props) => {
         name={props.name}
         ref={props.refChild}
         placeholder={props.placeholder}
-        className={`${props.className} ${
-          isDirtyIn && timepickerStyles.err__input
-        }`}
+        className={`${props.className}`}
         style={{ ...props.style }}
         onChange={onChangeHandler}
         onKeyPress={onkeyPressonlyNumbersAccept}

@@ -8,6 +8,10 @@
   text-align: center;
 }
 
+.error{
+  color: red;
+}
+
 .timepicker__align {
   width: 100%;
   display: flex;
