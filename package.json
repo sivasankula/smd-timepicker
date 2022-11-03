@@ -26,6 +26,15 @@
   "peerDependencies": {
     "react": "^16.0.0"
   },
+  "keywords": [
+    "smd-timepicker",
+    "timepicker react",
+    "react time",
+    "timepicker react app",
+    "react app time selector",
+    "timeSelector",
+    "pick a time"
+  ],
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
