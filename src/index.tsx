@@ -1,4 +1,5 @@
 import * as React from 'react'
+import 'smd-timepicker/dist/index.css'
 import Input from './Components/Input'
 import SelectAmPm from './Components/SelectAmPm'
 import {
