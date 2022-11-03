@@ -35,7 +35,6 @@ npm install smd-timepicker
 import React, { Component } from 'react'
 
 import SMDTimePicker  from 'smd-timepicker'
-import 'smd-timepicker/dist/index.css'
 
 class Example extends Component {
   render() {
