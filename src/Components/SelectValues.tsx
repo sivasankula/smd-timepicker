@@ -1,90 +1,127 @@
 import React, { useEffect } from 'react'
-import timepickerStyles from '../styles.module.css'
+import timePickerStyles from '../styles.module.css'
 
 interface Props {
-  renderData: any
-  refValue: any
-  isOpenFor: string
+  onSelectingAValue: (value: string) => void
+  onMouseInside: () => void
+  onMouseOutSide: () => void
+  renderData: {
+    name: string
+    value: string
+  }[]
+  selectedTime: string
+  selectedFor: string
   timeSelectConfig?: {
-    timeOuterContainer?: React.CSSProperties
+    timeDropDownStyles?: React.CSSProperties
     timeInsideContainer?: React.CSSProperties
     selectSpecificData?: {
-      isSelectedBGcolor: string
-      isHoveredBGcolor: string
-      isSelectedFontColor: string
-      isHoveredFontColor: string
+      isSelectedBGcolor?: string
+      isSelectedFontColor?: string
+      isHoveredBGcolor?: string
+      isHoveredFontColor?: string
     }
   }
-  onClick: (value: string) => void
-  onMouseOut: (value: string) => void
-  onMouseOver: (value: string) => void
 }
 
 function SelectValues(props: Props) {
   useEffect(() => {
+    console.log('inside useeff', props.selectedTime)
     let multipleValue = 24
-    if (props.isOpenFor === 'hours') {
-      if (+props.refValue === 1) {
+    if (props.selectedFor === 'hours') {
+      if (+props.selectedTime === 1) {
         multipleValue = 0
-      } else if (+props.refValue <= 2) {
+      } else if (+props.selectedTime <= 2) {
         multipleValue = 12
-      } else if (+props.refValue <= 3) {
+      } else if (+props.selectedTime <= 3) {
         multipleValue = 17
-      } else if (+props.refValue <= 4) {
+      } else if (+props.selectedTime <= 4) {
         multipleValue = 19
-      } else if (+props.refValue >= 5 && +props.refValue <= 12) {
+      } else if (+props.selectedTime >= 5 && +props.selectedTime <= 12) {
         multipleValue = 20
       } else {
         multipleValue = 23
       }
     } else {
-      multipleValue = +props.refValue < 21 ? 24 : 23.5
+      multipleValue = 26
     }
-    if (props.refValue) {
-      const dataEle = document.getElementById('scrolContainer')
-      if (dataEle) {
-        dataEle.scroll({
-          behavior: 'smooth',
-          top: +props.refValue * multipleValue
-        })
+    const dataEle = document.getElementById('scrollContainer')
+    if (dataEle) {
+      console.log('inside data cont')
+      dataEle.scroll({
+        behavior: 'smooth',
+        top: +props.selectedTime * multipleValue
+      })
+    }
+  }, [props.selectedTime])
+
+  const onMouseEnterHandler = (value: string) => {
+    const currentEl = document.getElementById(value)
+
+    if (currentEl) {
+      if (
+        currentEl.style.backgroundColor !==
+        (props.timeSelectConfig?.selectSpecificData?.isSelectedBGcolor ||
+          'lightblue')
+      ) {
+        currentEl.style.backgroundColor =
+          props.timeSelectConfig?.selectSpecificData?.isHoveredBGcolor || 'red'
+        currentEl.style.color =
+          props.timeSelectConfig?.selectSpecificData?.isHoveredFontColor ||
+          'black'
       }
     }
-  }, [props.refValue])
+  }
+
+  const onMouseLeaveHandler = (value: string) => {
+    const currentEl = document.getElementById(value)
+    if (currentEl) {
+      if (
+        currentEl.style.backgroundColor !==
+        (props.timeSelectConfig?.selectSpecificData?.isSelectedBGcolor ||
+          'lightblue')
+      ) {
+        currentEl.style.backgroundColor =
+          props.timeSelectConfig?.timeInsideContainer?.backgroundColor ||
+          'white'
+        currentEl.style.color =
+          props.timeSelectConfig?.timeInsideContainer?.color || 'black'
+      }
+    }
+  }
 
   return (
     <div
-      id='scrolContainer'
-      style={props.timeSelectConfig?.timeOuterContainer || {}}
-      className={timepickerStyles.custom__select__input}
+      id='scrollContainer'
+      style={props.timeSelectConfig?.timeDropDownStyles}
+      className={timePickerStyles.time__picker__inputS__selector}
+      onMouseEnter={() => {
+        props.onMouseInside()
+      }}
+      onMouseLeave={() => {
+        props.onMouseOutSide()
+      }}
     >
-      {props.renderData.map((item: any) => (
+      {props.renderData.map((item) => (
         <div
-          id={`${item.value}`}
-          className={`${timepickerStyles.timeValue__container}`}
+          key={item.value}
+          id={item.value}
           style={{
             ...props.timeSelectConfig?.timeInsideContainer,
-            color:
-              props.refValue === item.value
-                ? props.timeSelectConfig?.selectSpecificData
-                    ?.isSelectedFontColor || 'black'
-                : props.timeSelectConfig?.timeInsideContainer?.color || 'black',
             backgroundColor:
-              props.refValue === item.value
-                ? props.timeSelectConfig?.selectSpecificData
-                    ?.isSelectedBGcolor || 'rgb(63, 63, 255)'
+              item.value === props.selectedTime
+                ? props.timeSelectConfig?.selectSpecificData?.isSelectedBGcolor
                 : props.timeSelectConfig?.timeInsideContainer
-                    ?.backgroundColor || 'white'
+                    ?.backgroundColor || 'white',
+            color:
+              item.value === props.selectedTime
+                ? props.timeSelectConfig?.selectSpecificData
+                    ?.isSelectedFontColor
+                : props.timeSelectConfig?.timeInsideContainer?.color || 'black'
           }}
-          key={item.value}
-          onMouseOut={() => {
-            props.onMouseOut(item.value)
-          }}
-          onMouseOver={() => {
-            props.onMouseOver(item.value)
-          }}
-          onClick={() => {
-            props.onClick(item.value)
-          }}
+          className={timePickerStyles.time__picker__input__selector__value}
+          onMouseEnter={() => onMouseEnterHandler(item.value)}
+          onMouseLeave={() => onMouseLeaveHandler(item.value)}
+          onClick={() => props.onSelectingAValue(item.value)}
         >
           {item.name}
         </div>
