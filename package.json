@@ -28,12 +28,19 @@
   },
   "keywords": [
     "smd-timepicker",
+    "smd time picker",
+    "smd-time selector",
+    "smd",
+    "smd time",
+    "react time selector inputs",
     "timepicker react",
     "react time",
     "timepicker react app",
     "react app time selector",
     "timeSelector",
-    "pick a time"
+    "pick a time",
+    "smd-time-picker",
+    "smd time"
   ],
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",

@@ -6,20 +6,6 @@
 > --> 24 hours format as well as 12 hours format.
 > --> Easy to understand, given below gif
 
-allowed formats are
-
-```
-h:m:s
-h:m:ss
-h:mm:s
-h:mm:ss
-hh:mm:ss
-hh:mm:s
-hh:m:ss
-hh:m:s
-```
-or H
-
 
 [![NPM](https://img.shields.io/npm/v/smd-timepicker.svg)](https://www.npmjs.com/package/smd-timepicker) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
