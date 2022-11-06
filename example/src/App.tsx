@@ -19,7 +19,7 @@ const App = () => {
     <div>
       <h1 className='success' >My react library works good!! -- time is --{timeV}</h1>
       <div>
-        <SMDTimePicker onChange={onSelectingTime} is24Hours={false}  inputClass='' inputStyles={{}} selectClass='' selectStyle={{}} />
+        <SMDTimePicker onChange={onSelectingTime} is24Hours={false}  hoursPlaceholder='hh' inputClass='' inputStyles={{}} selectAMPMClass='' selectAMPMStyles={{}} />
       </div>
       <div>hii siva sankula siva</div>
     </div>

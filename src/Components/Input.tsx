@@ -138,7 +138,7 @@ const Input = (props: Props) => {
       if (
         docData.style.backgroundColor !==
         (props.timeSelectConfig?.selectSpecificData?.isSelectedBGcolor ||
-          'rgb(63, 63, 255)')
+          'lightgreen')
       ) {
         docData.style.backgroundColor =
           props.timeSelectConfig?.timeInsideContainer?.backgroundColor ||
@@ -156,7 +156,7 @@ const Input = (props: Props) => {
       if (
         docData.style.backgroundColor !==
         (props.timeSelectConfig?.selectSpecificData?.isSelectedBGcolor ||
-          'rgb(63, 63, 255)')
+          'lightgreen')
       ) {
         docData.style.backgroundColor =
           props.timeSelectConfig?.selectSpecificData?.isHoveredBGcolor ||

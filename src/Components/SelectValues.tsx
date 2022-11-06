@@ -71,7 +71,7 @@ function SelectValues(props: Props) {
             backgroundColor:
               props.refValue === item.value
                 ? props.timeSelectConfig?.selectSpecificData
-                    ?.isSelectedBGcolor || 'rgb(63, 63, 255)'
+                    ?.isSelectedBGcolor || 'lightgreen'
                 : props.timeSelectConfig?.timeInsideContainer
                     ?.backgroundColor || 'white'
           }}
