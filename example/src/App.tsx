@@ -5,7 +5,7 @@ import './AppExample.css'
 
 const App = () => {
   const onSelectingTime = (time: any) => {
-    console.log('app', time)
+    console.log('app time is -- ', time)
     setTime(time)
   }
   
@@ -18,10 +18,10 @@ const App = () => {
   return(
     <div>
       <h1 className='success' >My react library works good!! -- time is --{timeV}</h1>
-      <div>
-        <SMDTimePicker onChange={onSelectingTime} is24Hours={false}  hoursPlaceholder='hh' inputClass='' inputStyles={{}} selectAMPMClass='' selectAMPMStyles={{}} />
+      <div style={{marginLeft:'20px'}}>
+        <SMDTimePicker onChange={onSelectingTime} is24Hours={false}  inputClass='' inputStyles={{}} selectAMPMClass='' selectAMPMStyles={{}} /> 
       </div>
-      <div>hii siva sankula siva</div>
+      <div style={{marginTop:'110px'}}><h1>helloo siva sankula</h1></div>
     </div>
   )
 }
