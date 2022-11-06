@@ -417,10 +417,8 @@ const SMDTimePicker = (props: Props) => {
       } else {
         if (event.target.name === 'hours') {
           if (event.target.value[0] !== '0') {
-            console.log('indise the dar', hoursRef.current.value)
             hoursRef.current.value = `12`
           } else {
-            console.log('inside this case', hoursRef.current.value)
             hoursRef.current.value = hoursRef.current.value.substring(0, 2)
           }
           minutesRef.current.focus()

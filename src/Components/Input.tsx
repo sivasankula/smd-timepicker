@@ -206,7 +206,6 @@ const Input = (props: Props) => {
           if (e.target.name === 'hours') {
             if (props.is24) {
               data = '00'
-              console.log('onsidee')
             }
           } else {
             data = '00'
