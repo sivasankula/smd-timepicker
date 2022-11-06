@@ -94,7 +94,8 @@ const SMDTimePicker = (props: Props) => {
         }
       }
     }
-    console.log(timeFormatGlobal)
+    if (timeFormatGlobal) {
+    }
   }, [])
 
   React.useEffect(() => {
