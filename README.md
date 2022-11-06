@@ -1,5 +1,15 @@
 # smd-timepicker
 
+
+------------
+
+
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/smd-timepickergif.gif)
+
+
+------------
+
+
 > React time picker with custom configurations
 > --> Provides all the necessary stylling and user friendly interaction,
 > --> Can able to modify the existing styling as well as can able to add custome css also.
