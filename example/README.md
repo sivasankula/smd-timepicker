@@ -10,7 +10,7 @@
 ------------
 
 
-	React time picker with custom configurations.
+	 React time picker with custom configurations.
 	Provides all the necessary stylling and user friendly interaction,
 	Can able to modify the existing styling as well as can able to add custome css also.
 	24 hours format as well as 12 hours format and easy to understand.
@@ -112,7 +112,7 @@ const App = () => {
 
 export default App
 ````
-![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/example1add.PNG)
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/example1added.PNG)
 
 ## Example 2
 
@@ -153,7 +153,7 @@ export default App
 
 
 
-![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/example2.PNG)
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/example2added.PNG)
 
 
 
