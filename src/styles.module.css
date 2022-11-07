@@ -1,26 +1,46 @@
 /* add css module styles here (optional) */
 
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
+
+
+.time__picker__inputS__selector{
+  width: 30px;
+  border: 1px solid black;
+  height: 100px;
+  margin-left: 3px;
+  overflow: auto;
+  position: absolute;
+  z-index: 999;
+  background-color: white;
+}
+
+.time__picker__input__selector__value{
+  width: 100%;
+  height: 24px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  text-align: center;
+  cursor: pointer;
+}
+
+.time__picker__input__selector__value:hover {
+  color: red;
+  background-color: pink;
+}
+.time__picker__inputS{
+  width: 30px;
   text-align: center;
 }
 
-.error{
-  color: red;
+.select__am{
+  height: 21px;
 }
+
 
 .timepicker__align {
   width: 100%;
   display: flex;
 }
 
-/* .timepicker__inputContainer{
-  width:  32px;
-  padding-left: 5px;
- } */
 .timepicker__input {
   width: 30px;
   text-align: center;
@@ -30,52 +50,6 @@
 .timepicker__input:focus {
   border: 3px solid rgb(0, 220, 0);
 }
-
-.err__input {
-  border: 4px solid red;
-  border-radius: 3px;
-  background-color: rgb(253, 180, 180);
-}
-
-.custom__select__input {
-  width: 30px;
-  border: 2px solid black;
-  height: 100px;
-  margin-left: 3px;
-  overflow: auto;
-  position: absolute;
-  z-index: 999;
-  background-color: white;
-}
-
-.timeValue__container {
-    border: 1px solid green;
-    margin: 1px 0;
-    cursor: pointer;
-    text-align: center;
-}
-
-.timeValue__container :hover {
-  background-color: lightgreen !important;
-}
-
-.background__fixed{
-  background-color: blue;
-}
-
-.timepicker__selectContainer{
-  width: 52px;
-  height: 22px;
- }
-.timepicker__select {
-  width: 52px;
-  height: 20px;
-}
-
-.timepicker__select:focus {
-  border: 3px solid rgb(0, 220, 0);
-}
-
 
 
 

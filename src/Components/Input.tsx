@@ -4,7 +4,6 @@ import {
   hoursOptions24,
   minsOrSeconds
 } from '../Constants/DefaultData.enum'
-// import timepickerStyles from '../styles.module.css'
 import SelectValues from './SelectValues'
 
 interface Props {
@@ -24,16 +23,15 @@ interface Props {
     timeOuterContainer?: React.CSSProperties
     timeInsideContainer?: React.CSSProperties
     selectSpecificData?: {
-      isSelectedBGcolor: string
-      isHoveredBGcolor: string
-      isSelectedFontColor: string
-      isHoveredFontColor: string
+      isSelectedBGcolor?: string
+      isHoveredBGcolor?: string
+      isSelectedFontColor?: string
+      isHoveredFontColor?: string
     }
   }
 }
 
 const Input = (props: Props) => {
-  // const [isDirtyIn, setIsDirtyIn] = useState(false)
   const [openPicker, setOpenPicker] = useState(false)
   const [isOpenFor, setIsOpenFor] = useState('')
   const [renderData, setRenderData] = useState<any>([])
@@ -74,7 +72,6 @@ const Input = (props: Props) => {
       props.refChild.current.value === ''
     ) {
       if (!isInside) {
-        // setIsDirtyIn(true)
         if (props.refChild.current.value.length === 1) {
           props.refChild.current.value = `0${props.refChild.current.value}`
           if (props.name === 'hours') {
@@ -82,11 +79,11 @@ const Input = (props: Props) => {
               props.refChild.current.value = `01`
             }
           }
+          props.onManuallySelect()
         }
       }
     } else {
       if (!isInside) {
-        // setIsDirtyIn(false)
       }
     }
     setIsInside(false)
@@ -94,6 +91,7 @@ const Input = (props: Props) => {
 
   const onFocusHandler = (e: any) => {
     e.persist()
+    e.target.select()
     setRenderData([...fetchRenderData])
     setOpenPicker(true)
     setIsOpenFor(e.target.name)
@@ -112,7 +110,6 @@ const Input = (props: Props) => {
     }
     if (e.target.value.length === 2) {
       setOpenPicker(false)
-      // setIsDirtyIn(false)
     }
     let isValidPastd = true
     if (e.target.value === '') {
@@ -127,7 +124,6 @@ const Input = (props: Props) => {
   const onSelectValueClickHandler = (value: string) => {
     props.refChild.current.value = value
     setOpenPicker(false)
-    // setIsDirtyIn(false)
     props.onManuallySelect()
   }
 

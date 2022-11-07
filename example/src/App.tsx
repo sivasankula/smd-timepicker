@@ -1,27 +1,26 @@
 import React, { useState } from 'react'
 
-import SMDTimePicker  from 'smd-timepicker'
-import './AppExample.css'
+import SMDTimePicker from 'smd-timepicker'
 
 const App = () => {
-  const onSelectingTime = (time: any) => {
+  const [timeV, setTime] = useState('')
+
+  const onSelectingTime = (time: string) => {
     console.log('app time is -- ', time)
     setTime(time)
   }
-  
-  const [timeV, setTime] = useState('')
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setTime('09:23:56 pm')
-  //   },3000)
-  // }, [])
-  return(
+
+  return (
     <div>
-      <h1 className='success' >My react library works good!! -- time is --{timeV}</h1>
-      <div style={{marginLeft:'20px'}}>
-        <SMDTimePicker onChange={onSelectingTime} is24Hours={false}  inputClass='' inputStyles={{}} selectAMPMClass='' selectAMPMStyles={{}} /> 
+      <h1>Selected time is -- {timeV}</h1>
+      <div style={{ marginLeft: '100px' }}>
+        <SMDTimePicker
+          onChange={onSelectingTime}
+          is24Hours={true}
+          value={timeV}
+          isIncludesSeconds={true}
+        />
       </div>
-      <div style={{marginTop:'110px'}}><h1>helloo siva sankula</h1></div>
     </div>
   )
 }

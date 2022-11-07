@@ -9,10 +9,10 @@ interface Props {
     timeOuterContainer?: React.CSSProperties
     timeInsideContainer?: React.CSSProperties
     selectSpecificData?: {
-      isSelectedBGcolor: string
-      isHoveredBGcolor: string
-      isSelectedFontColor: string
-      isHoveredFontColor: string
+      isSelectedBGcolor?: string
+      isHoveredBGcolor?: string
+      isSelectedFontColor?: string
+      isHoveredFontColor?: string
     }
   }
   onClick: (value: string) => void
@@ -22,30 +22,13 @@ interface Props {
 
 function SelectValues(props: Props) {
   useEffect(() => {
-    let multipleValue = 24
-    if (props.isOpenFor === 'hours') {
-      if (+props.refValue === 1) {
-        multipleValue = 0
-      } else if (+props.refValue <= 2) {
-        multipleValue = 12
-      } else if (+props.refValue <= 3) {
-        multipleValue = 17
-      } else if (+props.refValue <= 4) {
-        multipleValue = 19
-      } else if (+props.refValue >= 5 && +props.refValue <= 12) {
-        multipleValue = 20
-      } else {
-        multipleValue = 23
-      }
-    } else {
-      multipleValue = +props.refValue < 21 ? 24 : 23.5
-    }
+    const multipleValue = 26
     if (props.refValue) {
       const dataEle = document.getElementById('scrolContainer')
       if (dataEle) {
         dataEle.scroll({
           behavior: 'smooth',
-          top: +props.refValue * multipleValue
+          top: +props.refValue * multipleValue - 26
         })
       }
     }
@@ -55,12 +38,12 @@ function SelectValues(props: Props) {
     <div
       id='scrolContainer'
       style={props.timeSelectConfig?.timeOuterContainer || {}}
-      className={timepickerStyles.custom__select__input}
+      className={timepickerStyles.time__picker__inputS__selector}
     >
       {props.renderData.map((item: any) => (
         <div
           id={`${item.value}`}
-          className={`${timepickerStyles.timeValue__container}`}
+          className={`${timepickerStyles.time__picker__input__selector__value}`}
           style={{
             ...props.timeSelectConfig?.timeInsideContainer,
             color:
