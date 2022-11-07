@@ -73,6 +73,92 @@ class Example extends Component {
 |  *timeSelectConfig* | {<br />timeOuterContainer: {},<br /> timeInsideContainer: {} <br /> selectSpecificData: {<br/> isSelectedBGcolor: 'rgb(63, 63, 255)',<br />isSelectedFontColor:'black',<br />isHoveredBGcolor:'lightblue',<br /> isHoveredFontColor: 'black' }</br> }  |  **timeOuterContainer** is to change the custom styles for the select input container,  **timeInsideContainer** is to time data value inside container  , **selectSpecificData** this object is to activated element styles 	|
 
 
+## Example 1
+```tsx
+import React, { useState } from 'react'
+
+import SMDTimePicker from 'smd-timepicker'
+
+const App = () => {
+  const [timeV, setTime] = useState('')
+
+  const onSelectingTime = (time: string) => {
+    console.log('app time is -- ', time)
+    setTime(time)
+  }
+
+  return (
+    <div>
+      <h1>Selected time is -- {timeV}</h1>
+      <div style={{ marginLeft: '100px' }}>
+        <SMDTimePicker
+          onChange={onSelectingTime}
+          is24Hours={false}
+		  value={timeV}
+          isIncludesSeconds={false}
+          inputClass=''
+          inputStyles={{ backgroundColor: 'yellow' }}
+          selectAMPMClass=''
+          selectAMPMStyles={{ backgroundColor: 'yellow' }}
+          timeSelectConfig={{
+            selectSpecificData: { isSelectedBGcolor: 'red', isHoveredBGcolor:"gray" },
+            timeInsideContainer: {backgroundColor: "lightcyan"}
+          }}
+        />
+      </div>
+    </div>
+  )
+}
+
+export default App
+````
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/smd-timepickergif.gif)
+
+## Example 2
+
+```tsx
+import React, { useState } from 'react'
+
+import SMDTimePicker from 'smd-timepicker'
+
+const App = () => {
+  const [timeV, setTime] = useState('')
+
+  const onSelectingTime = (time: string) => {
+    console.log('app time is -- ', time)
+    setTime(time)
+  }
+
+  return (
+    <div>
+      <h1>Selected time is -- {timeV}</h1>
+      <div style={{ marginLeft: '100px' }}>
+        <SMDTimePicker
+          onChange={onSelectingTime}
+          is24Hours={true}
+          value={timeV}
+          isIncludesSeconds={true}
+        />
+      </div>
+    </div>
+  )
+}
+
+export default App
+
+
+
+````
+
+
+
+
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/smd-timepickergif.gif)
+
+
+
+
+------
 
 ## License
 

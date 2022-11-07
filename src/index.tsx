@@ -30,10 +30,10 @@ interface Props {
     timeOuterContainer?: React.CSSProperties
     timeInsideContainer?: React.CSSProperties
     selectSpecificData?: {
-      isSelectedBGcolor: string
-      isHoveredBGcolor: string
-      isSelectedFontColor: string
-      isHoveredFontColor: string
+      isSelectedBGcolor?: string
+      isHoveredBGcolor?: string
+      isSelectedFontColor?: string
+      isHoveredFontColor?: string
     }
   }
 }
@@ -43,7 +43,6 @@ const SMDTimePicker = (props: Props) => {
   const {
     value = '',
     is24Hours = false,
-    // onChange = (e: any) => {},
     hoursPlaceholder = 'HH',
     minutesPlaceholder = 'MM',
     secondsPlaceholder = 'SS',
@@ -69,8 +68,6 @@ const SMDTimePicker = (props: Props) => {
   const minutesRef = React.useRef<any>(null)
   const secondsRef = React.useRef<any>(null)
   const selectRef = React.useRef<any>(null)
-  // const [timeFormat, setTimeFormat] = React.useState(defaultFormat)
-  // const minSelectRef = React.useRef<any>(null)
   React.useEffect(() => {
     if (format) {
       if (is24Hours) {
@@ -78,10 +75,8 @@ const SMDTimePicker = (props: Props) => {
           (formatItem: any) => formatItem.format === format
         )
         if (getFormatData.length) {
-          // setTimeFormat(getFormatData[0])
           timeFormatGlobal = getFormatData[0]
         } else {
-          // setTimeFormat(default24Format)
           timeFormatGlobal = default24Format
         }
       } else {
@@ -89,7 +84,6 @@ const SMDTimePicker = (props: Props) => {
           (formatItem: any) => formatItem.format === format
         )
         if (getFormatData.length) {
-          // setTimeFormat(getFormatData[0])
           timeFormatGlobal = getFormatData[0]
         }
       }
@@ -418,6 +412,12 @@ const SMDTimePicker = (props: Props) => {
         if (event.target.name === 'hours') {
           if (event.target.value[0] !== '0') {
             hoursRef.current.value = `12`
+          } else if (
+            event.target.value[0] === '0' &&
+            event.target.value[1] === '0' &&
+            !is24Hours
+          ) {
+            hoursRef.current.value = '01'
           } else {
             hoursRef.current.value = hoursRef.current.value.substring(0, 2)
           }
