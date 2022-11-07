@@ -112,7 +112,7 @@ const App = () => {
 
 export default App
 ````
-![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/example1.PNG)
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/example1add.PNG)
 
 ## Example 2
 
