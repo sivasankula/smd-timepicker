@@ -538,9 +538,7 @@ const SMDTimePicker = (props: Props) => {
               name='selectAMPM'
               data={selectOptions || defaultOptions}
               style={{
-                ...(selectAMPMStyles || {}),
-                width: '52px',
-                height: '20px'
+                ...selectAMPMStyles
               }}
               className={`${selectAMPMClass || ''}`}
               onSelect={onSelectValue}
