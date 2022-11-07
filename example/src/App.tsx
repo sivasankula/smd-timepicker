@@ -16,7 +16,7 @@ const App = () => {
       <div style={{ marginLeft: '100px' }}>
         <SMDTimePicker
           onChange={onSelectingTime}
-          is24Hours={true}
+          is24Hours={false}
           value={timeV}
           isIncludesSeconds={true}
         />

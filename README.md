@@ -17,7 +17,7 @@
 > --> Easy to understand, given below gif
 
 
-[![NPM](https://img.shields.io/npm/v/smd-timepicker.svg)](https://www.npmjs.com/package/smd-timepicker) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -112,7 +112,7 @@ const App = () => {
 
 export default App
 ````
-![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/smd-timepickergif.gif)
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/example1.PNG)
 
 ## Example 2
 
@@ -153,7 +153,7 @@ export default App
 
 
 
-![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/smd-timepickergif.gif)
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/example2.PNG)
 
 
 
