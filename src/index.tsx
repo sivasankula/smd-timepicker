@@ -57,7 +57,7 @@ const SMDTimePicker = (props: Props) => {
       selectSpecificData: {
         isSelectedBGcolor: 'lightgreen',
         isSelectedFontColor: 'black',
-        isHoveredBGcolor: 'lightblue',
+        isHoveredBGcolor: ' ',
         isHoveredFontColor: 'green'
       }
     },

@@ -1,27 +1,23 @@
 # smd-timepicker
 
+
+------------
+
+
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/smd-timepickergif.gif)
+
+
+------------
+
+
 > React time picker with custom configurations
 > --> Provides all the necessary stylling and user friendly interaction,
 > --> Can able to modify the existing styling as well as can able to add custome css also.
 > --> 24 hours format as well as 12 hours format.
 > --> Easy to understand, given below gif
 
-allowed formats are
 
-```
-h:m:s
-h:m:ss
-h:mm:s
-h:mm:ss
-hh:mm:ss
-hh:mm:s
-hh:m:ss
-hh:m:s
-```
-or H
-
-
-[![NPM](https://img.shields.io/npm/v/smd-timepicker.svg)](https://www.npmjs.com/package/smd-timepicker) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -52,9 +48,9 @@ class Example extends Component {
 |						|									|											|
 | 		*value* 	 | `''` (string)  				|   If want pass default value as `hh:mm a`  format or `HH:mm` format		 |
 |						|									|											|
-| 	*is24Hours*  	 | `false` (Boolean)       	 |   If we want 24 hrs format then set this to true|
+| 	*is24Hours*  	 | `false` (Boolean)       	 |   If we want **24** hours format then set this to true|
 |						|												|											|
-| 	*removeInputSelector*  	 | `false` (Boolean)       	 |  if you don't want Time select options provide this as true |
+| 	*isRemoveInputSelector*  	 | `false` (Boolean)       	 |  If you don't want Time select options provide this as true |
 |						|												|											|
 | *hoursPlaceholder*  |  `HH` {string)        | For hours input  placeholder |
 |						|												|											|
@@ -68,15 +64,101 @@ class Example extends Component {
 |						|												|											|
 |   *inputClass*     | ` ''` (className) (css className string)      | Can able to provide our app CSS classes to the inputs |
 |						|												|											|
-|   *selectStyle*    |  `{}` (css styles object)| Set inline styles for select AM or PM|
+|   *selectAMPMStyles*    |  `{}` (css styles object)| Set inline styles for select AM or PM|
 |						|												|											|
-|   *selectClass*    |  `''` (className)       | Can able to provide our app CSS classes to the select AM or PM|
+|   *selectAMPMClass*    |  `''` (className)       | Can able to provide our app CSS classes to the select AM or PM|
 |						|												|											|
-|  *selectOptions*|`[{name:'AM',value:'am'},..]`| If you want to Change the name of select AM or PM as lowercase values or uppercase values or titlesase values, You can obtain those with css styles also  	|
+|  *selectOptions*|`[{name:'AM',value:'am'},..]`| If you want to change the name of select AM or PM as lowercase values or uppercase values or titlesase values, You can obtain those with css styles also  	|
 |						|												|											|
-|  *timeSelectConfig* | {<br />timeOuterContainer: {},<br /> timeInsideContainer: {} <br /> selectSpecificData: {<br/> isSelectedBGcolor: 'rgb(63, 63, 255)',<br />isSelectedFontColor:'black',<br />isHoveredBGcolor:'lightblue',<br /> isHoveredFontColor: 'black' }</br> }  |  **timeOuterContainer** is to change the custom styles for the select input container,  **timeInsideContainer** is to time data value inside container  , **selectSpecificData** this object is to activated element styles 	|
+|  *timeSelectConfig* | {<br />timeOuterContainer: {},<br /> timeInsideContainer: {} <br /> selectSpecificData: {<br/> isSelectedBGcolor: 'lightgreen',<br />isSelectedFontColor:'black',<br />isHoveredBGcolor:'lightblue',<br /> isHoveredFontColor: 'black' }</br> }  |  **timeOuterContainer** is to change the custom styles for the select input container,  **timeInsideContainer** is to time data value inside container  , **selectSpecificData** this object is to activated element styles 	|
 
 
+## Example 1
+```tsx
+import React, { useState } from 'react'
+
+import SMDTimePicker from 'smd-timepicker'
+
+const App = () => {
+  const [timeV, setTime] = useState('')
+
+  const onSelectingTime = (time: string) => {
+    console.log('app time is -- ', time)
+    setTime(time)
+  }
+
+  return (
+    <div>
+      <h1>Selected time is -- {timeV}</h1>
+      <div style={{ marginLeft: '100px' }}>
+        <SMDTimePicker
+          onChange={onSelectingTime}
+          is24Hours={false}
+		  value={timeV}
+          isIncludesSeconds={false}
+          inputClass=''
+          inputStyles={{ width:'30px', height:'30px', color: 'blue', fontWeight:'bold' }}
+          selectAMPMClass=''
+          selectAMPMStyles={{ width:'60px', height:'30px'  }}
+          timeSelectConfig={{
+            selectSpecificData: { isSelectedBGcolor: 'orange', isHoveredBGcolor:"gray" },
+            timeInsideContainer: {backgroundColor: "lightcyan"}
+          }}
+        />
+      </div>
+    </div>
+  )
+}
+
+export default App
+````
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/example1add.PNG)
+
+## Example 2
+
+```tsx
+import React, { useState } from 'react'
+
+import SMDTimePicker from 'smd-timepicker'
+
+const App = () => {
+  const [timeV, setTime] = useState('')
+
+  const onSelectingTime = (time: string) => {
+    console.log('app time is -- ', time)
+    setTime(time)
+  }
+
+  return (
+    <div>
+      <h1>Selected time is -- {timeV}</h1>
+      <div style={{ marginLeft: '100px' }}>
+        <SMDTimePicker
+          onChange={onSelectingTime}
+          is24Hours={true}
+          value={timeV}
+          isIncludesSeconds={true}
+        />
+      </div>
+    </div>
+  )
+}
+
+export default App
+
+
+
+````
+
+
+
+
+![alt text](https://raw.githubusercontent.com/sivasankula19/smd-timepicker/master/src/Constants/example2.PNG)
+
+
+
+
+------
 
 ## License
 

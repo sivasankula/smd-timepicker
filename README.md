@@ -70,7 +70,7 @@ class Example extends Component {
 |						|												|											|
 |  *selectOptions*|`[{name:'AM',value:'am'},..]`| If you want to change the name of select AM or PM as lowercase values or uppercase values or titlesase values, You can obtain those with css styles also  	|
 |						|												|											|
-|  *timeSelectConfig* | {<br />timeOuterContainer: {},<br /> timeInsideContainer: {} <br /> selectSpecificData: {<br/> isSelectedBGcolor: 'rgb(63, 63, 255)',<br />isSelectedFontColor:'black',<br />isHoveredBGcolor:'lightblue',<br /> isHoveredFontColor: 'black' }</br> }  |  **timeOuterContainer** is to change the custom styles for the select input container,  **timeInsideContainer** is to time data value inside container  , **selectSpecificData** this object is to activated element styles 	|
+|  *timeSelectConfig* | {<br />timeOuterContainer: {},<br /> timeInsideContainer: {} <br /> selectSpecificData: {<br/> isSelectedBGcolor: 'lightgreen',<br />isSelectedFontColor:'black',<br />isHoveredBGcolor:'lightblue',<br /> isHoveredFontColor: 'black' }</br> }  |  **timeOuterContainer** is to change the custom styles for the select input container,  **timeInsideContainer** is to time data value inside container  , **selectSpecificData** this object is to activated element styles 	|
 
 
 ## Example 1
