@@ -17,8 +17,16 @@ const App = () => {
         <SMDTimePicker
           onChange={onSelectingTime}
           is24Hours={false}
-          value={timeV}
-          isIncludesSeconds={true}
+		  value={timeV}
+          isIncludesSeconds={false}
+          inputClass=''
+          inputStyles={{ width:'30px', height:'30px', color: 'blue', fontWeight:'bold' }}
+          selectAMPMClass=''
+          selectAMPMStyles={{ width:'60px', height:'30px'  }}
+          timeSelectConfig={{
+            selectSpecificData: { isSelectedBGcolor: 'orange', isHoveredBGcolor:"gray" },
+            timeInsideContainer: {backgroundColor: "lightcyan"}
+          }}
         />
       </div>
     </div>

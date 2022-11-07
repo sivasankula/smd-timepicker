@@ -97,11 +97,11 @@ const App = () => {
 		  value={timeV}
           isIncludesSeconds={false}
           inputClass=''
-          inputStyles={{ backgroundColor: 'yellow' }}
+          inputStyles={{ width:'30px', height:'30px', color: 'blue', fontWeight:'bold' }}
           selectAMPMClass=''
-          selectAMPMStyles={{ backgroundColor: 'yellow' }}
+          selectAMPMStyles={{ width:'60px', height:'30px'  }}
           timeSelectConfig={{
-            selectSpecificData: { isSelectedBGcolor: 'red', isHoveredBGcolor:"gray" },
+            selectSpecificData: { isSelectedBGcolor: 'orange', isHoveredBGcolor:"gray" },
             timeInsideContainer: {backgroundColor: "lightcyan"}
           }}
         />
