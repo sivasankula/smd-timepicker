@@ -10,11 +10,11 @@
 ------------
 
 
-> React time picker with custom configurations
-> --> Provides all the necessary stylling and user friendly interaction,
-> --> Can able to modify the existing styling as well as can able to add custome css also.
-> --> 24 hours format as well as 12 hours format.
-> --> Easy to understand, given below gif
+	React time picker with custom configurations.
+	Provides all the necessary stylling and user friendly interaction,
+	Can able to modify the existing styling as well as can able to add custome css also.
+	24 hours format as well as 12 hours format and easy to understand.
+
 
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
@@ -70,7 +70,7 @@ class Example extends Component {
 |						|												|											|
 |  *selectOptions*|`[{name:'AM',value:'am'},..]`| If you want to change the name of select AM or PM as lowercase values or uppercase values or titlesase values, You can obtain those with css styles also  	|
 |						|												|											|
-|  *timeSelectConfig* | {<br />timeOuterContainer: {},<br /> timeInsideContainer: {} <br /> selectSpecificData: {<br/> isSelectedBGcolor: 'lightgreen',<br />isSelectedFontColor:'black',<br />isHoveredBGcolor:'lightblue',<br /> isHoveredFontColor: 'black' }</br> }  |  **timeOuterContainer** is to change the custom styles for the select input container,  **timeInsideContainer** is to time data value inside container  , **selectSpecificData** this object is to activated element styles 	|
+|  *timeSelectConfig* | {<br />timeOuterContainer: {},<br /> timeInsideContainer: {}, <br /> selectSpecificData: {<br/> isSelectedBGcolor: 'lightgreen',<br />isSelectedFontColor:'black',<br />isHoveredBGcolor:'lightblue',<br /> isHoveredFontColor: 'black' }</br> }  |  **timeOuterContainer** is to change the custom styles for the select input container,  **timeInsideContainer** is to time data value inside container  , **selectSpecificData** this object is to activated element styles 	|
 
 
 ## Example 1
